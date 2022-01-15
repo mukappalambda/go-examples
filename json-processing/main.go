@@ -8,10 +8,10 @@ import (
 )
 
 type Post struct {
-  Userid int `json:"userId"`
-  Id int `json:"id"`
-  Title string `json:"title"`
-  Body string `json:"body"`
+	Userid int    `json:"userId,omitempty"`
+	Id     int    `json:"id,omitempty"`
+	Title  string `json:"title,omitempty"`
+	Body   string `json:"body,omitempty"`
 }
 
 func main()  {

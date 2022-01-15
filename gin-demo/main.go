@@ -7,9 +7,9 @@ import (
 )
 
 type Book struct {
-  Id     int32    `form:"id"`
-  Author string `form:"author"`
-  Title  string `form:"title"`
+	Id     int32  `form:"id" json:"id,omitempty"`
+	Author string `form:"author" json:"author,omitempty"`
+	Title  string `form:"title" json:"title,omitempty"`
 }
 
 var books = []Book{
