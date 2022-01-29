@@ -3,10 +3,22 @@ package main
 import (
 	"fmt"
 	"testing"
+	"time"
 )
 
 func Sum(a int, b int) int {
   return a + b
+}
+
+func BugSum(a int, b int) int {
+  return a + b + 1
+}
+
+func TestBugSum(t *testing.T) {
+  out := BugSum(1, -1)
+  if out != 0 {
+    t.Errorf("Got %d; want 0", out)
+  }
 }
 
 func TestSum(t *testing.T) {
@@ -14,6 +26,22 @@ func TestSum(t *testing.T) {
   if out != 0 {
     t.Errorf("Got %d; want 0", out)
   }
+}
+
+var run bool
+func TestSumSkip(t *testing.T) {
+  if !run {
+    t.Skip("This test is skipped.")
+  }
+}
+
+func ExampleSum() {
+  // This is a testable example in Go
+  fmt.Println(Sum(1, 1), Sum(1, -2))
+  fmt.Println(Sum(5, 5))
+  // Output:
+  // 2 -1
+  // 10
 }
 
 func TestSumTableDriven(t *testing.T) {
@@ -42,6 +70,15 @@ func TestSumTableDriven(t *testing.T) {
 }
 
 func BenchmarkSum(b *testing.B) {
+  for i := 0; i < b.N; i++ {
+    Sum(5, 5)
+  }
+}
+
+func BenchmarkSumAgain(b *testing.B) {
+  // time.Sleep simulates a costly computation
+  time.Sleep(time.Second)
+  b.ResetTimer()
   for i := 0; i < b.N; i++ {
     Sum(5, 5)
   }
