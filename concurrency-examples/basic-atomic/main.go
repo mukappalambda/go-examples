@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"runtime"
 	"sync"
 	"sync/atomic"
+	"time"
 )
 
 func main() {
@@ -15,6 +17,7 @@ func main() {
 	wg.Add(numGoroutines)
 	for i := 0; i < numGoroutines; i++ {
 		go func() {
+			time.Sleep(50 * time.Millisecond)
 			atomic.AddInt32(&cnt, 1)
 			// cnt++
 			wg.Done()
@@ -22,5 +25,5 @@ func main() {
 	}
 	wg.Wait()
 	fmt.Println(cnt)
-	// fmt.Println(runtime.NumGoroutine())
+	fmt.Println(runtime.NumGoroutine())
 }
