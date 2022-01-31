@@ -4,6 +4,12 @@ Learning purpose only.
 
 ---
 
+## Guideline
+
+- [Golang roadmap](https://roadmap.sh/golang)
+
+---
+
 ## Learning Materials
 
 - [Go in Action pdf](https://github.com/rahulgoti1/books-1/blob/master/go/go-in-action.pdf)
