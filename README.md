@@ -22,3 +22,5 @@ Learning purpose only.
 - [Go 語言高性能編程](https://geektutu.com/post/high-performance-go.html)
 - [Go Wiki](https://github.com/golang/go/wiki)
 - [Youtube Channel: TalkGo](https://www.youtube.com/c/talkgo_night)
+
+[Back to top](#go-examples)
