@@ -8,6 +8,17 @@ Learning purpose only.
 
 - [Golang roadmap](https://roadmap.sh/golang)
 
+So, basic question, how to learn Go?
+
+Currently, I would search articles/explanations from the following sources:
+
+- [Go Doc](https://go.dev/doc/)
+- [Go Wiki](https://github.com/golang/go/wiki)
+- [Effective Go](https://go.dev/doc/effective_go)
+- [The Go Blog](https://go.dev/blog/)
+
+Basically, all the intermediate-to-advanced knowledge already resides in there.
+
 ---
 
 ## Learning Materials
