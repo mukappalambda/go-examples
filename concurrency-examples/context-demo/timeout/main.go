@@ -10,28 +10,31 @@ import (
 
 func main() {
 	var wg sync.WaitGroup
-	timeout := 5 * time.Second
+	timeout := 3 * time.Second
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
-	wg.Add(1)
-	go func (ctx context.Context) {
-		defer wg.Done()
-		worker(ctx)
-	}(ctx)
+	numGoroutines := 10
+	wg.Add(numGoroutines)
+	for i := 0; i < numGoroutines; i++ {
+		go func (ctx context.Context, id int) {
+			defer wg.Done()
+			worker(ctx, id)
+		}(ctx, i)
+	}
 	wg.Wait()
 	fmt.Println("Number of goroutines:", runtime.NumGoroutine())
 }
 
-func worker(ctx context.Context) {
-	fmt.Println("worker is up!")
+func worker(ctx context.Context, id int) {
+	fmt.Println("worker", id, "is up!")
 	for {
 		select {
 		case <-ctx.Done():
-			fmt.Println("Stop working.")
+			fmt.Println("worker", id, "stops working.")
 			return
 		default:
 			time.Sleep(time.Second)
-			fmt.Println("worker is working...")
+			fmt.Println("worker", id, "is working...")
 		}
 	}
 }
