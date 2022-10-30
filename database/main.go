@@ -9,9 +9,9 @@ import (
 )
 
 type User struct {
-	Id int64
+	Id       int64
 	Username string
-	Score float32
+	Score    float32
 }
 
 func main() {
@@ -30,26 +30,26 @@ func main() {
 	fmt.Println("connected!")
 
 	// I have already insert data into mytable
-	
+
 	fmt.Println("query...")
-	
+
 	// select * from mytable
 	users, _ := GetUsers(db)
 	fmt.Println("users:", users)
-	
+
 	// select * from mytable (multiple)
 	users1, _ := GetUser(db, "alex")
 	fmt.Println("user1:", users1)
-	
+
 	// select * from mytable (single)
 	singleUser, _ := GetSingleUser(db, "bob")
 	fmt.Println("single user:", singleUser)
 
 	// add a new user
 	newUser := User{
-		Id: 3,
+		Id:       3,
 		Username: "joe",
-		Score: 30.3,
+		Score:    30.3,
 	}
 	num, _ := AddUser(db, newUser)
 	fmt.Println("number:", num)

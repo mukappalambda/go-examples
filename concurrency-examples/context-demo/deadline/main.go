@@ -16,7 +16,7 @@ func main() {
 	defer cancel()
 
 	wg.Add(1)
-	go func (ctx context.Context) {
+	go func(ctx context.Context) {
 		defer wg.Done()
 		worker(ctx)
 	}(ctx)

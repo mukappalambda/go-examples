@@ -14,8 +14,8 @@ type Post struct {
 	Body  string `json:"body,omitempty"`
 }
 
-func main()  {
-	url :="https://jsonplaceholder.typicode.com/posts"
+func main() {
+	url := "https://jsonplaceholder.typicode.com/posts"
 
 	// get request
 	resp, err := http.Get(url)

@@ -6,20 +6,20 @@ import (
 )
 
 type User struct {
-	Id int
-	Name string
+	Id    int
+	Name  string
 	Score float32
 	Tasks []string
-	Done bool
+	Done  bool
 }
 
-func main()  {
+func main() {
 	user := User{
-		Id: 1,
-		Name: "alex",
+		Id:    1,
+		Name:  "alex",
 		Score: 10.1,
 		Tasks: []string{"job1", "job2"},
-		Done: true,
+		Done:  true,
 	}
 
 	t := reflect.TypeOf(user)
@@ -38,12 +38,12 @@ func main()  {
 
 	names := []string{"alex", "bob", "mark"}
 	tnames := reflect.TypeOf(names)
-	vnames :=reflect.ValueOf(names)
+	vnames := reflect.ValueOf(names)
 	fmt.Println(tnames, vnames)
 
-	myMap := map[string]string {
-		"name": "alex",
-		"email": "alex@gmail.com",
+	myMap := map[string]string{
+		"name":   "alex",
+		"email":  "alex@gmail.com",
 		"gender": "male",
 	}
 
@@ -56,5 +56,5 @@ func main()  {
 	tc := reflect.TypeOf(c)
 	vc := reflect.ValueOf(c)
 	fmt.Println(tc, vc)
-	
+
 }

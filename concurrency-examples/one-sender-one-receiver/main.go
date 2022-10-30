@@ -6,15 +6,15 @@ import (
 	"time"
 )
 
-func main()  {
+func main() {
 	var wg sync.WaitGroup
 
 	done := make(chan struct{})
 
 	c := sender(done)
-	
+
 	wg.Add(1)
-	go func (ch <-chan string) {
+	go func(ch <-chan string) {
 		defer wg.Done()
 
 		for i := 0; i < 5; i++ {
@@ -26,12 +26,12 @@ func main()  {
 	fmt.Println("Closing the channel to cancel the sender.")
 	close(done)
 	fmt.Println(<-c)
-	
+
 }
 
 func sender(done <-chan struct{}) <-chan string {
 	c := make(chan string)
-	go func ()  {
+	go func() {
 		defer close(c)
 		for {
 			select {

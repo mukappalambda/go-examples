@@ -12,7 +12,6 @@ type Result struct {
 	Error error
 }
 
-
 func main() {
 	c := worker()
 
@@ -25,14 +24,14 @@ func main() {
 	fmt.Println("Score:", result.Score)
 }
 
-func worker() <-chan Result{
+func worker() <-chan Result {
 	c := make(chan Result)
 
-	go func () {
+	go func() {
 		defer close(c)
 		var result Result
 		s1 := rand.NewSource(time.Now().UnixNano())
-    r1 := rand.New(s1)
+		r1 := rand.New(s1)
 		v := r1.Intn(10)
 
 		if v < 4 {
@@ -40,10 +39,10 @@ func worker() <-chan Result{
 		} else {
 			result = Result{Score: v, Error: nil}
 		}
-		
-		c <-result
-		
+
+		c <- result
+
 	}()
-	
+
 	return c
 }

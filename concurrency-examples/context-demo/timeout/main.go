@@ -16,7 +16,7 @@ func main() {
 	numGoroutines := 10
 	wg.Add(numGoroutines)
 	for i := 0; i < numGoroutines; i++ {
-		go func (ctx context.Context, id int) {
+		go func(ctx context.Context, id int) {
 			defer wg.Done()
 			worker(ctx, id)
 		}(ctx, i)
