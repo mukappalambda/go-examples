@@ -33,5 +33,6 @@ Basically, all the intermediate-to-advanced knowledge already resides in there.
 - [Go 語言高性能編程](https://geektutu.com/post/high-performance-go.html)
 - [Go Wiki](https://github.com/golang/go/wiki)
 - [Youtube Channel: TalkGo](https://www.youtube.com/c/talkgo_night)
+- [Go go-to Guide](https://yourbasic.org/golang/)
 
 [Back to top](#go-examples)
