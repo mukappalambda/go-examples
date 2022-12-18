@@ -24,7 +24,7 @@ Basically, all the intermediate-to-advanced knowledge already resides in there.
 ## Learning Materials
 
 - [Go in Action](https://www.oreilly.com/library/view/go-in-action/9781617291784/#:~:text=Go%20in%20Action%20is%20for,and%20idiomatic%20view%20of%20Go.), [PDF](https://pepa.holla.cz/wp-content/uploads/2016/10/Go-in-Action.pdf)
-- [Go in Practice pdf](https://github.com/thierhost/books-1/blob/master/go/go-in-practice.pdf)
+- [Go in Practice](https://www.oreilly.com/library/view/go-in-practice/9781633430075/), [PDF](https://pepa.holla.cz/wp-content/uploads/2016/10/Go-in-Practice.pdf)
 - [Concurrency in Go pdf](https://github.com/chapin666/books/blob/master/golang/Concurrency-in-Go.pdf)
 - [Go Concurrency Patterns Github](https://github.com/lotusirous/go-concurrency-patterns)
 - [有哪些值得學習的 Go 語言開源項目?](https://www.zhihu.com/question/20801814/answer/1534555951)
