@@ -13,7 +13,7 @@ So, basic question, how to learn Go?
 Currently, I would search articles/explanations from the following sources:
 
 - [Go Doc](https://go.dev/doc/)
-- [Go Wiki](https://github.com/golang/go/wiki)
+- [Go Wiki](https://github.com/golang/go/wiki), a collection of information about the Go Programming Language.
 - [Effective Go](https://go.dev/doc/effective_go)
 - [The Go Blog](https://go.dev/blog/)
 
