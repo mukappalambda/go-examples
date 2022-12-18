@@ -23,7 +23,7 @@ Basically, all the intermediate-to-advanced knowledge already resides in there.
 
 ## Learning Materials
 
-- [Go in Action pdf](https://github.com/rahulgoti1/books-1/blob/master/go/go-in-action.pdf)
+- [Go in Action](https://www.oreilly.com/library/view/go-in-action/9781617291784/#:~:text=Go%20in%20Action%20is%20for,and%20idiomatic%20view%20of%20Go.), [PDF](https://pepa.holla.cz/wp-content/uploads/2016/10/Go-in-Action.pdf)
 - [Go in Practice pdf](https://github.com/thierhost/books-1/blob/master/go/go-in-practice.pdf)
 - [Concurrency in Go pdf](https://github.com/chapin666/books/blob/master/golang/Concurrency-in-Go.pdf)
 - [Go Concurrency Patterns Github](https://github.com/lotusirous/go-concurrency-patterns)
