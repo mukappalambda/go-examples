@@ -15,12 +15,15 @@ type HyperParam struct {
 	Dropout   float64
 }
 
+var (
+	batchSize = flag.Int("bs", 32, "batch size")
+	criterion = flag.String("criterion", "mse", "criterion")
+	dropout   = flag.Float64("dropout", 0.2, "dropout probability")
+	epochs    = flag.Int("epochs", 10, "epochs")
+	optimizer = flag.String("optimizer", "adam", "optimizer")
+)
+
 func main() {
-	batchSize := flag.Int("bs", 32, "batch size")
-	criterion := flag.String("criterion", "mse", "criterion")
-	dropout := flag.Float64("dropout", 0.2, "dropout probability")
-	epochs := flag.Int("epochs", 10, "epochs")
-	optimizer := flag.String("optimizer", "adam", "optimizer")
 	flag.Parse()
 
 	if *criterion != "mse" && *criterion != "mae" {
