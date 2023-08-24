@@ -6,7 +6,7 @@ Learning purpose only.
 
 ## Guideline
 
-- [Golang roadmap](https://roadmap.sh/golang)
+- Go Developer Roadmap: https://roadmap.sh/golang
 
 So, basic question, how to learn Go?
 
@@ -35,5 +35,6 @@ Basically, all the intermediate-to-advanced knowledge already resides in there.
 - [Go Wiki](https://github.com/golang/go/wiki)
 - [Youtube Channel: TalkGo](https://www.youtube.com/c/talkgo_night)
 - [Go go-to Guide](https://yourbasic.org/golang/)
+- [Xargin's Blog](https://xargin.com/), a gopher from China (his github: https://github.com/cch123).
 
 [Back to top](#go-examples)
