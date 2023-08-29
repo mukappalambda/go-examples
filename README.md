@@ -36,5 +36,6 @@ Basically, all the intermediate-to-advanced knowledge already resides in there.
 - [Youtube Channel: TalkGo](https://www.youtube.com/c/talkgo_night)
 - [Go go-to Guide](https://yourbasic.org/golang/)
 - [Xargin's Blog](https://xargin.com/), a gopher from China (his github: https://github.com/cch123).
+- [Advanced Go Programming](https://github.com/chai2010/advanced-go-programming-book)
 
 [Back to top](#go-examples)
