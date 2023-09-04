@@ -25,7 +25,7 @@ Basically, all the intermediate-to-advanced knowledge already resides in there.
 ## Learning Materials
 
 - [Go in Action](https://www.oreilly.com/library/view/go-in-action/9781617291784/#:~:text=Go%20in%20Action%20is%20for,and%20idiomatic%20view%20of%20Go.)
-- [Go in Practice](https://www.oreilly.com/library/view/go-in-practice/9781633430075/)
+- Butcher, M., & Farina, M. (2016). Go in Practice: Includes 70 Techniques. Manning Publications Co.. 
 - Cox-Buday, K. (2017). Concurrency in Go: Tools and Techniques for Developers. " O'Reilly Media, Inc.". 
 - Tsoukalos, M. (2019). Mastering Go: Create Golang production applications using network libraries, concurrency, machine learning, and advanced data structures. Packt Publishing Ltd. 
 - [Go Concurrency Patterns Github](https://github.com/lotusirous/go-concurrency-patterns)
