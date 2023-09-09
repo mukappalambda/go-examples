@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -20,7 +21,10 @@ func main() {
 	}
 
 	fmt.Println("Create ...")
-	db.AutoMigrate(&User{})
+	err = db.AutoMigrate(&User{})
+	if err != nil {
+		log.Fatal(err)
+	}
 	db.Create(&User{UserId: 1, Name: "alex"})
 
 	fmt.Println("Read ...")
