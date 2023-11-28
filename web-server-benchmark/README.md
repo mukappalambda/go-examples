@@ -26,6 +26,8 @@ go run server_fasthttp.go
 
 Then we can use `wrk` to obtain the rps metric for each server.
 
+`net/http`:
+
 ```bash
 wrk -c100 -t12 -d 15s http://localhost:8080/
 ```
@@ -41,6 +43,8 @@ Requests/sec: 326782.70
 Transfer/sec:     44.88MB
 ```
 
+`fasthttp`:
+
 ```bash
 wrk -c100 -t12 -d 15s http://localhost:8081/
 ```
@@ -54,6 +58,23 @@ Running 15s test @ http://localhost:8081/
   9182552 requests in 15.09s, 1.42GB read
 Requests/sec: 608525.87
 Transfer/sec:     96.34MB
+```
+
+`gofiber`:
+
+```bash
+wrk -c100 -t12 -d 15s http://localhost:8082/
+```
+
+```
+Running 15s test @ http://localhost:8082/
+  12 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   679.18us    2.48ms  74.99ms   94.80%
+    Req/Sec    45.24k     5.57k   73.18k    73.42%
+  8144561 requests in 15.07s, 1.12GB read
+Requests/sec: 540472.92
+Transfer/sec:     75.77MB
 ```
 
 Future Direction:
