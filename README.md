@@ -40,4 +40,13 @@ Basically, all the intermediate-to-advanced knowledge already resides in there.
 - [qcrao's blog](https://qcrao.com/), github: https://github.com/qcrao
 - [Advanced Go Programming](https://github.com/chai2010/advanced-go-programming-book)
 
+---
+
+## Style Guides
+
+- The Google Go Style Guide: https://google.github.io/styleguide/go/
+- The Uber Go Style Guide: https://github.com/uber-go/guide
+
+---
+
 [Back to top](#go-examples)
