@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -37,7 +38,7 @@ func main() {
 }
 
 func GetBooks(c *gin.Context) {
-	c.JSON(200, books)
+	c.JSON(http.StatusOK, books)
 }
 
 func NewBook(c *gin.Context) {
@@ -50,5 +51,5 @@ func NewBook(c *gin.Context) {
 		books = append(books, book)
 	}
 
-	c.JSON(201, book)
+	c.JSON(http.StatusCreated, book)
 }
