@@ -26,7 +26,6 @@ func main() {
 	fmt.Println("Closing the channel to cancel the sender.")
 	close(done)
 	fmt.Println(<-c)
-
 }
 
 func sender(done <-chan struct{}) <-chan string {

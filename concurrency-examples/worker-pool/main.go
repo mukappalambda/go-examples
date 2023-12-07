@@ -38,7 +38,6 @@ func main() {
 	for i := 0; i < numJobs; i++ {
 		fmt.Println(<-results)
 	}
-
 }
 
 func worker(id int, jobs <-chan string, results chan string) {

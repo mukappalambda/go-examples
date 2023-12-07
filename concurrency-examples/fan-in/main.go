@@ -14,7 +14,6 @@ func main() {
 	for v := range c {
 		fmt.Println(v)
 	}
-
 }
 
 func producer(name string, count int) <-chan string {

@@ -1,9 +1,10 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
+
+	"database/sql"
 
 	_ "github.com/lib/pq"
 )
@@ -40,5 +41,4 @@ func main() {
 		}
 	}
 	fmt.Println("Todo records inserted successfully.")
-
 }
