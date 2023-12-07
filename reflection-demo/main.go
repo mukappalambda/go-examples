@@ -56,5 +56,4 @@ func main() {
 	tc := reflect.TypeOf(c)
 	vc := reflect.ValueOf(c)
 	fmt.Println(tc, vc)
-
 }

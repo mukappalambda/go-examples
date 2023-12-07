@@ -2,10 +2,11 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"log"
 	"time"
+
+	"database/sql"
 
 	_ "github.com/lib/pq"
 )

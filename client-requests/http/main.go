@@ -19,7 +19,6 @@ func main() {
 
 	// get request
 	resp, err := http.Get(url)
-
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -27,7 +26,6 @@ func main() {
 	defer resp.Body.Close()
 
 	b, err := io.ReadAll(resp.Body)
-
 	if err != nil {
 		fmt.Println("Failed to read the response body.")
 	}
@@ -46,7 +44,6 @@ func main() {
 	// post request
 	jsonStr := []byte(`{"userId": 1, "title": "post title", "body": "post body"}`)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
-
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -63,5 +60,4 @@ func main() {
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println(string(body))
-
 }

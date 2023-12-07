@@ -14,5 +14,4 @@ func main() {
 	if _, ok := hashmap[1]; ok {
 		fmt.Println("1 is in hashmap")
 	}
-
 }

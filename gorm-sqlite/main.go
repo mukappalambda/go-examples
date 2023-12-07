@@ -40,5 +40,4 @@ func main() {
 	fmt.Println("Delete ...")
 	db.Where("Name = ?", "bob").Delete(&user)
 	fmt.Println(user)
-
 }

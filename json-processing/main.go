@@ -16,7 +16,6 @@ type Post struct {
 
 func main() {
 	b, err := ioutil.ReadFile("./posts.json")
-
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -33,5 +33,4 @@ func main() {
 	warmupLogger.Info("morning")
 	HIITLogger.Warn("morning")
 	MarathonLogger.Fatal("afternoon")
-
 }

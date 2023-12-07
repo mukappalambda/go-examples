@@ -41,7 +41,6 @@ func worker() <-chan Result {
 		}
 
 		c <- result
-
 	}()
 
 	return c
