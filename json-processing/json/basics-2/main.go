@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 )
 
 type Post struct {
@@ -15,7 +15,7 @@ type Post struct {
 }
 
 func main() {
-	b, err := ioutil.ReadFile("./posts.json")
+	b, err := os.ReadFile("./posts.json")
 	if err != nil {
 		log.Fatal(err)
 	}
