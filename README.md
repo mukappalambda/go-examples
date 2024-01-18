@@ -17,6 +17,7 @@ Currently, I would search articles/explanations from the following sources:
 - [Go Doc](https://go.dev/doc/)
 - [Go Wiki](https://github.com/golang/go/wiki), a collection of information about the Go Programming Language.
 - [The Go Blog](https://go.dev/blog/)
+- [Good First Issue / Go](https://goodfirstissue.dev/language/go)
 
 Basically, all the intermediate-to-advanced knowledge already resides in there.
 
