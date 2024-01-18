@@ -2,6 +2,15 @@
 
 Learning purpose only.
 
+## Table of Contents
+
+- [Go Examples](#go-examples)
+   - [Guideline](#guideline)
+   - [Learning Materials](#learning-materials)
+   - [Style Guides](#style-guides)
+
+<!-- Created by https://github.com/ekalinin/github-markdown-toc -->
+
 ---
 
 ## Guideline
