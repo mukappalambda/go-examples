@@ -15,7 +15,7 @@ Currently, I would search articles/explanations from the following sources:
 - [Awesome Go](https://github.com/avelino/awesome-go), A curated list of awesome Go frameworks, libraries and software.
 - [Effective Go](https://go.dev/doc/effective_go)
 - [Go Doc](https://go.dev/doc/)
-- [Go Wiki](https://github.com/golang/go/wiki), a collection of information about the Go Programming Language.
+- [Go Wiki](https://go.dev/wiki/), a collection of information about the Go Programming Language.
 - [The Go Blog](https://go.dev/blog/)
 - [Good First Issue / Go](https://goodfirstissue.dev/language/go)
 
