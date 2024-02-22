@@ -3,7 +3,7 @@ module github.com/mukappalambda/fiber-swagger
 go 1.21
 
 require (
-	github.com/gofiber/fiber/v2 v2.51.0
+	github.com/gofiber/fiber/v2 v2.52.1
 	github.com/gofiber/swagger v0.1.14
 	github.com/swaggo/swag v1.16.2
 )
@@ -15,7 +15,7 @@ require (
 	github.com/go-openapi/jsonreference v0.20.2 // indirect
 	github.com/go-openapi/spec v0.20.9 // indirect
 	github.com/go-openapi/swag v0.22.4 // indirect
-	github.com/google/uuid v1.4.0 // indirect
+	github.com/google/uuid v1.5.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/klauspost/compress v1.17.3 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
