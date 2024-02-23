@@ -5,9 +5,9 @@ Learning purpose only.
 ## Table of Contents
 
 - [Go Examples](#go-examples)
-   - [Guideline](#guideline)
-   - [Learning Materials](#learning-materials)
-   - [Style Guides](#style-guides)
+  - [Guideline](#guideline)
+  - [Learning Materials](#learning-materials)
+  - [Style Guides](#style-guides)
 
 <!-- Created by https://github.com/ekalinin/github-markdown-toc -->
 
@@ -24,6 +24,7 @@ Currently, I would search articles/explanations from the following sources:
 - [Awesome Go](https://github.com/avelino/awesome-go), A curated list of awesome Go frameworks, libraries and software.
 - [Effective Go](https://go.dev/doc/effective_go)
 - [Go Doc](https://go.dev/doc/)
+- [Go FAQ](https://go.dev/doc/faq)
 - [Go Wiki](https://go.dev/wiki/), a collection of information about the Go Programming Language.
 - [The Go Blog](https://go.dev/blog/)
 - [Good First Issue / Go](https://goodfirstissue.dev/language/go)
