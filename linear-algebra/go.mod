@@ -1,4 +1,4 @@
-module example.com/linear-algebra-examples
+module example.com/linear-algebra
 
 go 1.21.6
 
