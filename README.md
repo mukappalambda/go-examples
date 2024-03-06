@@ -39,6 +39,7 @@ Basically, all the intermediate-to-advanced knowledge already resides in there.
 - Butcher, M., & Farina, M. (2016). Go in Practice: Includes 70 Techniques. Manning Publications Co.. 
 - Cox-Buday, K. (2017). Concurrency in Go: Tools and Techniques for Developers. " O'Reilly Media, Inc.". 
 - Tsoukalos, M. (2019). Mastering Go: Create Golang production applications using network libraries, concurrency, machine learning, and advanced data structures. Packt Publishing Ltd. 
+- 100 Go Mistakes and How to Avoid Them [[github]](https://github.com/teivah/100-go-mistakes)
 - [Go Concurrency Patterns Github](https://github.com/lotusirous/go-concurrency-patterns)
 - [有哪些值得學習的 Go 語言開源項目?](https://www.zhihu.com/question/20801814/answer/1534555951)
 - [Go 語言 101](https://gfw.go101.org/article/101.html)
