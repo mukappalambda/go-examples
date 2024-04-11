@@ -15,18 +15,25 @@ type Post struct {
 }
 
 func main() {
+	if err := run(); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func run() error {
 	b, err := os.ReadFile("./posts.json")
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	var posts []Post
 
 	if err := json.Unmarshal(b, &posts); err != nil {
-		fmt.Println(err)
+		return err
 	}
 
 	for _, post := range posts {
 		fmt.Println(post.Userid, post.Id, post.Title)
 	}
+	return nil
 }
