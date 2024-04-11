@@ -18,17 +18,24 @@ var (
 )
 
 func main() {
+	if err := run(); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func run() error {
 	flag.Parse()
 	byt, err := os.ReadFile(*pass)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	msg := []byte("Subject: Introduction to golang\r\n" + "This is the message of the mail.\r\n")
 
 	err = sendMail(*username, string(byt), *host, *addr, *from, strings.Split(*to, " "), msg)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
+	return nil
 }
 
 func sendMail(username string, password string, host string, addr string, from string, to []string, msg []byte) error {
