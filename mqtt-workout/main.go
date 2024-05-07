@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"sync"
 	"time"
 
 	"github.com/eclipse/paho.mqtt.golang"
@@ -19,13 +20,17 @@ var (
 )
 
 func main() {
+
 	flag.Parse()
+	var wg sync.WaitGroup
 
 	server := fmt.Sprintf("%s://%s:%s", *scheme, *host, *port)
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(server).SetClientID(*clientId)
 	opts.SetOnConnectHandler(onConn)
+	wg.Add(1)
 	opts.SetDefaultPublishHandler(func(client mqtt.Client, msg mqtt.Message) {
+		defer wg.Done()
 		fmt.Printf("%v - Topic: %s; payload: %s", time.Now().Truncate(time.Microsecond), msg.Topic(), msg.Payload())
 	})
 	client := mqtt.NewClient(opts)
@@ -38,12 +43,14 @@ func main() {
 		log.Fatal(token.Error())
 	}
 
+	wg.Add(1)
 	go func() {
-		token := client.Publish(*topic, 0, false, *payload)
-		token.Wait()
+		defer wg.Done()
+		if token := client.Publish(*topic, 0, false, *payload); token.Wait() && token.Error() != nil {
+			log.Fatal(token.Error())
+		}
 	}()
-
-	time.Sleep(250 * time.Millisecond)
+	wg.Wait()
 	client.Disconnect(250)
 }
 
