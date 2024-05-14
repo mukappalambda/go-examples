@@ -3,8 +3,10 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 )
 
@@ -13,26 +15,36 @@ type Post struct {
 	Body  string `json:"body,omitempty"`
 }
 
-func main() {
-	url := "https://jsonplaceholder.typicode.com/posts"
+var (
+	url = flag.String("url", "https://jsonplaceholder.typicode.com/posts", "url")
+)
 
+func main() {
+	flag.Parse()
+	if err := run(*url); err != nil {
+		log.Fatal(err)
+	}
+
+}
+
+func run(url string) error {
 	// get request
 	resp, err := http.Get(url)
 	if err != nil {
-		fmt.Println(err)
+		return fmt.Errorf("making get request %q: %w", url, err)
 	}
 
 	defer resp.Body.Close()
 
 	b, err := io.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("Failed to read the response body.")
+		return fmt.Errorf("reading response body: %w", err)
 	}
 
 	var posts []Post
 
 	if err := json.Unmarshal(b, &posts); err != nil {
-		fmt.Println("Failed to unmarshal the request body.")
+		return fmt.Errorf("unmarshalling byte: %w", err)
 	}
 
 	for _, post := range posts {
@@ -44,7 +56,7 @@ func main() {
 	jsonStr := []byte(`{"userId": 1, "title": "post title", "body": "post body"}`)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
 	if err != nil {
-		fmt.Println(err)
+		return fmt.Errorf("making post request: %q; %w", url, err)
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -53,10 +65,14 @@ func main() {
 	resp, err = client.Do(req)
 
 	if err != nil {
-		panic(err)
+		return fmt.Errorf("retrieving response: %w", err)
 	}
 
 	defer resp.Body.Close()
-	body, _ := io.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("reading response body: %w", err)
+	}
 	fmt.Println(string(body))
+	return nil
 }
