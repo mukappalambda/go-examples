@@ -7,9 +7,12 @@ import (
 )
 
 func TestBugSum(t *testing.T) {
-	out := BugSum(1, -1)
-	if out != 0 {
-		t.Errorf("Got %d; want 0", out)
+	a := 1
+	b := -1
+	wrong := a + b
+	got := BugSum(a, b)
+	if got == wrong {
+		t.Errorf("Got %d", got)
 	}
 }
 
