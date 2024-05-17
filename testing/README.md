@@ -16,17 +16,19 @@ The followings are a collection of testing and benchmark examples/best practices
 ## Cheatsheet
 
 ```bash
-go test
+go test ./... # run all tests
+go test ./helloworld
 
-# verbose mode
-go test -v
+go test -v ./... # run with verbose mode
+go test -v ./helloworld
 
-# filter test case
-go test -run Driven -v
-go test -run Example
+go test -run Driven ./... # filter tests
+go test -run Example -v ./...
 
-go test -v | grep PASS
-go test -v | grep FAIL
+go test -shuffle on -v ./... # shuffle tests
+
+go test -v ./... | grep PASS
+go test -v ./... | grep FAIL
 
 go test -bench .
 ```
