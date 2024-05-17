@@ -1,18 +1,10 @@
-package main
+package helloworld
 
 import (
 	"fmt"
 	"testing"
 	"time"
 )
-
-func Sum(a int, b int) int {
-	return a + b
-}
-
-func BugSum(a int, b int) int {
-	return a + b + 1
-}
 
 func TestBugSum(t *testing.T) {
 	out := BugSum(1, -1)
