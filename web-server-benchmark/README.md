@@ -18,9 +18,9 @@ Make these web servers up and running:
 
 ```bash
 # in the first terminal
-go run server_http.go
+go run http/main.go
 # in the second terminal
-go run server_fasthttp.go
+go run fasthttp/main.go
 # and so on
 ```
 
