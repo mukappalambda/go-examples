@@ -28,7 +28,7 @@ var books = []Book{
 
 func main() {
 	for _, book := range books {
-		fmt.Println(book.Id, book.Author, book.Title)
+		fmt.Printf("%+v\n", book)
 	}
 
 	var oldBook Book
@@ -40,12 +40,12 @@ func main() {
 		}
 	}
 
-	fmt.Println("oldBook:", oldBook)
+	fmt.Printf("oldBook: %+v\n", oldBook)
 
 	firstBook := books[0]
-	fmt.Println(firstBook)
+	fmt.Printf("firstBook: %+v\n", firstBook)
 	lastBook := books[len(books)-1]
-	fmt.Println(lastBook)
+	fmt.Printf("lastBook: %+v\n", lastBook)
 
 	book1 := Book{
 		Id:     4,
@@ -54,15 +54,9 @@ func main() {
 	}
 
 	book1.SetAuthor("alan")
-	fmt.Println(book1) // {4 alan mark's book}
-	book1.SetAuthor2("mark")
-	fmt.Println(book1) // {4 alan mark's book}
+	fmt.Printf("book1: %+v\n", book1) // book1: {Id:4 Author:alan Title:mark's book}
 }
 
 func (b *Book) SetAuthor(s string) {
-	b.Author = s
-}
-
-func (b Book) SetAuthor2(s string) {
 	b.Author = s
 }
