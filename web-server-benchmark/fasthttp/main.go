@@ -1,15 +1,24 @@
 package main
 
 import (
-	"io"
+	"flag"
+	"fmt"
+	"log"
 
 	"github.com/valyala/fasthttp"
 )
 
+var port = flag.Int("port", 8080, "server port")
+
 func main() {
-	fasthttp.ListenAndServe(":8081", indexHandler)
+	flag.Parse()
+
+	fmt.Printf("server listening at %d\n", *port)
+	if err := fasthttp.ListenAndServe(fmt.Sprintf(":%d", *port), indexHandler); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func indexHandler(ctx *fasthttp.RequestCtx) {
-	io.WriteString(ctx, "Hello from the fasthttp server.")
+	fmt.Fprintf(ctx, "Hello from the fasthttp server.")
 }

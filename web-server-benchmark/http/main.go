@@ -1,14 +1,20 @@
 package main
 
 import (
-	"io"
+	"flag"
+	"fmt"
 	"log"
 	"net/http"
 )
 
+var port = flag.Int("port", 8080, "server port")
+
 func main() {
+	flag.Parse()
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		io.WriteString(w, "Hello from the http server.")
+		fmt.Fprint(w, "Hello from the http server.")
 	})
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	fmt.Printf("server listening at %d\n", *port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *port), nil))
 }

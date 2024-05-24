@@ -18,10 +18,11 @@ Make these web servers up and running:
 
 ```bash
 # in the first terminal
-go run http/main.go
+go run http/main.go -port 8080
 # in the second terminal
-go run fasthttp/main.go
-# and so on
+go run fasthttp/main.go -port 8081
+# in the third terminal
+go run fiber/main.go -port 8082
 ```
 
 Then we can use `wrk` to obtain the rps metric for each server.
