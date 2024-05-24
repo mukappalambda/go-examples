@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"log"
 	"net/http"
 
@@ -34,7 +35,9 @@ func main() {
 		BookRoutes.POST("/", NewBook)
 	}
 
-	r.Run()
+	if err := r.Run(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+		log.Fatal(err)
+	}
 }
 
 func GetBooks(c *gin.Context) {
