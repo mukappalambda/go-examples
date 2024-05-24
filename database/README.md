@@ -21,7 +21,7 @@ go get github.com/lib/pq
 ```
 
 ```bash
-go run ping_database.go
+go run ping-database/main.go
 #Database connected.
 #max open connections: 50
 ```
