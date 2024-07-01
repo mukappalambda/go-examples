@@ -3,7 +3,7 @@ module github.com/mukappalambda/fiber-swagger
 go 1.21
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.1
+	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/gofiber/swagger v0.1.14
 	github.com/swaggo/swag v1.16.2
 )
