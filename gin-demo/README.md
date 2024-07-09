@@ -3,7 +3,7 @@
 To start up the server:
 
 ```bash
-go run .
+make run
 ```
 
 To add all dependencies:
