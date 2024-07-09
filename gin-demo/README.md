@@ -1,9 +1,27 @@
 # Gin Demo
 
-To start up the server:
+To start up the server locally:
 
 ```bash
 make run
+```
+
+To build the docker image:
+
+```bash
+make build-image
+```
+
+To start up the docker container:
+
+```bash
+make up-container
+```
+
+To tear down the docker container:
+
+```bash
+make down-container
 ```
 
 To add all dependencies:
