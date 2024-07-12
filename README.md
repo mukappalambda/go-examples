@@ -36,9 +36,11 @@ Basically, all the intermediate-to-advanced knowledge already resides in there.
 ## Learning Materials
 
 - [Go in Action](https://www.oreilly.com/library/view/go-in-action/9781617291784/#:~:text=Go%20in%20Action%20is%20for,and%20idiomatic%20view%20of%20Go.)
-- Butcher, M., & Farina, M. (2016). Go in Practice: Includes 70 Techniques. Manning Publications Co.. 
-- Cox-Buday, K. (2017). Concurrency in Go: Tools and Techniques for Developers. " O'Reilly Media, Inc.". 
-- Tsoukalos, M. (2019). Mastering Go: Create Golang production applications using network libraries, concurrency, machine learning, and advanced data structures. Packt Publishing Ltd. 
+- Butcher, M., & Farina, M. (2016). Go in Practice: Includes 70 Techniques. Manning Publications Co..
+- Cox-Buday, K. (2017). Concurrency in Go: Tools and Techniques for Developers. " O'Reilly Media, Inc.".
+- Tsoukalos, M. (2019). Mastering Go: Create Golang production applications using network libraries, concurrency, machine learning, and advanced data structures. Packt Publishing Ltd.
+- Jeffery, T. (2021). Distributed Services with Go: Your Guide to Reliable, Scalable, and Maintainable Systems.
+- Titmus, M. A. (2021). Cloud Native Go. " O'Reilly Media, Inc.".
 - 100 Go Mistakes and How to Avoid Them [[github]](https://github.com/teivah/100-go-mistakes)
 - [Go Concurrency Patterns Github](https://github.com/lotusirous/go-concurrency-patterns)
 - [有哪些值得學習的 Go 語言開源項目?](https://www.zhihu.com/question/20801814/answer/1534555951)
