@@ -8,6 +8,9 @@ type S struct {
 	//
 }
 
+// interface guard
+var _ Handler = (*S)(nil)
+
 func (s S) Handle() error {
 	return nil
 }
