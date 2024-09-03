@@ -1,9 +1,10 @@
 package http
 
 import (
-	httpPort "github.com/mukappalambda/go-examples/examples/gin-demo/internal/core/ports/http"
 	"log"
 	"net/http"
+
+	httpPort "github.com/mukappalambda/go-examples/examples/gin-demo/internal/core/ports/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mukappalambda/go-examples/examples/gin-demo/internal/core/repository"
