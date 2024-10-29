@@ -1,3 +1,5 @@
+github.com/cpmech/gosl v1.2.12 h1:pnR/WaX851QpUAp1k7OjL8YAwYhiliSLfRg8NbE4WzY=
+github.com/cpmech/gosl v1.2.12/go.mod h1:MxsM114Zj89V2SMTcAwIxtuv28XH1yiiZtk2pa0BJAo=
 golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa h1:FRnLl4eNAQl8hwxVVC17teOw8kdjVDVAiFMtgUdTSRQ=
 golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa/go.mod h1:zk2irFbV9DP96SEBUUAy67IdHUaZuSnrz1n472HUCLE=
 gonum.org/v1/gonum v0.15.1 h1:FNy7N6OUZVUaWG9pTiD+jlhdQ3lMP+/LcTpJ6+a8sQ0=
