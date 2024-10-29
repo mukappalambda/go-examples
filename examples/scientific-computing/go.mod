@@ -1,4 +1,4 @@
-module linear-algebra-demo
+module scientific-computing
 
 go 1.23.0
 
