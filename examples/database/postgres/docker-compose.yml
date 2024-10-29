@@ -1,20 +1,20 @@
 ---
-version: '3'
+version: "3"
 
 services:
   postgres:
-    image: 'postgres:14'
-    container_name: 'postgres'
+    image: "postgres:14"
+    container_name: "postgres"
     ports:
-      - '5432:5432'
+      - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: demo
 
   golang:
-    image: 'golang:1.16.5'
-    container_name: 'golang'
+    image: "golang:1.16.5"
+    container_name: "golang"
     working_dir: /data
     volumes:
       - $PWD:/data
