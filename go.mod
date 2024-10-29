@@ -10,7 +10,6 @@ require (
 	github.com/swaggo/swag v1.16.3
 	github.com/tidwall/gjson v1.17.3
 	github.com/valyala/fasthttp v1.55.0
-	gonum.org/v1/gonum v0.15.1
 	gorm.io/driver/sqlite v1.5.6
 	gorm.io/gorm v1.25.11
 )
