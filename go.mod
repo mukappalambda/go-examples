@@ -6,7 +6,6 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/gofiber/swagger v1.1.0
-	github.com/sirupsen/logrus v1.9.3
 	github.com/swaggo/swag v1.16.3
 	github.com/tidwall/gjson v1.17.3
 	github.com/valyala/fasthttp v1.55.0
