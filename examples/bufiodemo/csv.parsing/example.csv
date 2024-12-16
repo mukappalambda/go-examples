@@ -1,0 +1,6 @@
+ID,Name,Age,Birthday,Active,Salary,Email,Tags
+1,John Doe,28,1995-05-15,true,50000.75,john.doe@example.com,"developer,python,remote"
+2,Jane Smith,35,1988-09-25,false,62000.50,jane.smith@example.org,"manager,agile"
+3,Michael Brown,40,1983-01-12,true,72000.00,michael.brown@example.net,"golang,backend,team-lead"
+4,Lisa Green,30,1993-07-07,true,54000.00,lisa.green@example.com,"ux-designer,figma,remote"
+5,Tom White,22,2001-03-03,false,40000.25,tom.white@example.co,"intern,frontend"
