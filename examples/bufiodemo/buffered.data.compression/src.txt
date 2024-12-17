@@ -1,0 +1,1 @@
+Go is a fast[12] statically typed, compiled high-level general purpose programming language. It is known for its simplicity and efficiency.[13] Its simplicity express through its basic syntax of the language itself and its large library that help the developer to have a small stack for its project.
