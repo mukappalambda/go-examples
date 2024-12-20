@@ -13,13 +13,13 @@ func main() {
 	port := 8080
 	ln, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error listening at %d\n", port)
 	}
 	fmt.Printf("server is listening at %d\n", port)
 	for {
 		conn, err := ln.Accept()
 		if err != nil {
-			log.Fatal(err)
+			log.Printf("error accepting the connection: %s\n", err)
 		}
 		go handleConnection(conn)
 	}
@@ -33,10 +33,10 @@ func handleConnection(conn net.Conn) {
 	reader := bufio.NewReader(conn)
 	for {
 		buf, err := reader.ReadString('\n')
-		buf = strings.Trim(buf, "\n")
 		if err != nil {
-			log.Fatal(err)
+			log.Printf("error reading from connection: %s\n", err)
 		}
+		buf = strings.Trim(buf, "\n")
 		var ts string
 		ts = time.Now().Local().Format(time.DateTime)
 		fmt.Printf("[client@%s] %s > %s\n", remoteAddr, ts, buf)
@@ -44,7 +44,9 @@ func handleConnection(conn net.Conn) {
 		msg := fmt.Sprintf("[server@%s] %s > haha you said: %q?\n", localAddr, ts, buf)
 		_, err = conn.Write([]byte(msg))
 		if err != nil {
-			log.Fatal(err)
+			log.Printf("client at %s left already: %s\n", remoteAddr, err)
+			conn.Close()
+			return
 		}
 	}
 }
