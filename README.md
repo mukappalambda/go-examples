@@ -2,6 +2,8 @@
 
 Learning purpose only.
 
+![Alt](animated/hello.gif)
+
 ## Table of Contents
 
 - [Go Examples](#go-examples)
