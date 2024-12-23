@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"golang.org/x/time/rate"
@@ -14,6 +15,9 @@ func RateLimitedHandler(r, b int) http.HandlerFunc {
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("hi there\n"))
+		if _, err := w.Write([]byte("hi there\n")); err != nil {
+			http.Error(w, "Error writing response", http.StatusInternalServerError)
+			log.Printf("Error writing response: %s\n", err)
+		}
 	}
 }
