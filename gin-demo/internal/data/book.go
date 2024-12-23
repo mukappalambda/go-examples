@@ -1,6 +1,6 @@
 package data
 
-import "github.com/mukappalambda/go-examples/examples/gin-demo/internal/core/repository"
+import "github.com/mukappalambda/go-examples/gin-demo/internal/core/repository"
 
 var Books = []repository.Book{
 	{
