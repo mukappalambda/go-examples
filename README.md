@@ -1,6 +1,6 @@
 # Go Examples
 
-Learning purpose only.
+For learning purposes only.
 
 ![Alt](animated/hello.gif)
 
