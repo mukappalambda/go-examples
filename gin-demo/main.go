@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	httpAdapter "github.com/mukappalambda/go-examples/examples/gin-demo/internal/adapters/http"
+	httpAdapter "github.com/mukappalambda/go-examples/gin-demo/internal/adapters/http"
 )
 
 func main() {
