@@ -5,7 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
-	_ "github.com/mukappalambda/go-examples/examples/fiber-swagger/docs"
+	_ "github.com/mukappalambda/go-examples/fiber-swagger/docs"
 )
 
 // @title			Fiber Example API
