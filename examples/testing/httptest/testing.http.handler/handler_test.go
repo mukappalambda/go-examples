@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -13,7 +12,7 @@ func TestGetUsers(t *testing.T) {
 	ts := httptest.NewServer(GetUsers())
 	defer ts.Close()
 	client := ts.Client()
-	res, _ := client.Get(fmt.Sprintf("%s", ts.URL))
+	res, _ := client.Get(ts.URL)
 	if res.StatusCode != http.StatusOK {
 		t.Fatalf("want %d; got %d\n", http.StatusOK, res.StatusCode)
 	}
