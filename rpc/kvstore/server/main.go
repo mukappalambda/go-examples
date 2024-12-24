@@ -69,7 +69,9 @@ func main() {
 			log.Printf("Error accepting connection: %s\n", err)
 			continue
 		}
-		defer conn.Close()
-		go rpcServer.ServeConn(conn)
+		go func(conn net.Conn) {
+			defer conn.Close()
+			rpcServer.ServeConn(conn)
+		}(conn)
 	}
 }
