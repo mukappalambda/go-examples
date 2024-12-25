@@ -13,11 +13,20 @@ import (
 
 var defaultTimeout = time.Second
 
+func fooInterceptor(ctx context.Context, method string, req, reply any, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
+	start := time.Now()
+	err := invoker(ctx, method, req, reply, cc, opts...)
+	elapsed := time.Since(start)
+	log.Printf("request start time: %s; request elapsed time: %s\n", start.Format(time.DateTime), elapsed.String())
+	return err
+}
+
 func main() {
 	port := 50051
 	addr := fmt.Sprintf("localhost:%d", port)
 	opts := []grpc.DialOption{
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithUnaryInterceptor(fooInterceptor),
 	}
 	conn, err := grpc.NewClient(addr, opts...)
 	if err != nil {

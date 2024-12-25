@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"time"
 
 	pb "github.com/mukappalambda/go-examples/rpc/grpc/note.server/note"
 	"google.golang.org/grpc"
@@ -45,8 +46,10 @@ func stupidInterceptor(ctx context.Context, req any, _ *grpc.UnaryServerInfo, ha
 	if ok {
 		log.Printf("validated [client@%s]", p.Addr.String())
 	}
+	start := time.Now()
 	res, err := handler(ctx, req)
-	log.Println("after returning response")
+	elapsed := time.Since(start)
+	log.Printf("request start time: %s; request elapsed time: %s\n", start.Format(time.DateTime), elapsed.String())
 	return res, err
 }
 
