@@ -20,17 +20,35 @@ func main() {
 		panic("Failed to connect database")
 	}
 
-	fmt.Println("Create ...")
 	err = db.AutoMigrate(&User{})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error migrating: %v\n", err)
 	}
-	db.Create(&User{UserId: 1, Name: "alex"})
+	fmt.Println("creating a single user")
+	db.Create(&User{UserId: 1, Name: "alpha"})
+	users := []User{
+		{
+			UserId: 2,
+			Name:   "beta",
+		},
+		{
+			UserId: 3,
+			Name:   "gamma",
+		},
+	}
+	fmt.Println("creating multiple users")
+	db.Create(&users)
 
-	fmt.Println("Read ...")
+	fmt.Println("reading a single user")
 	var user User
 	db.First(&user, 1)
 	fmt.Println(user)
+	fmt.Println("reading multiple users")
+	foundUsers := make([]User, 0)
+	db.Find(&foundUsers)
+	for _, user := range foundUsers {
+		fmt.Printf("found user: %+v\n", user)
+	}
 
 	// fmt.Println("Update ...")
 	// db.Model(&user).Where("Name = ?", "alex").Update("Name", "bob")
