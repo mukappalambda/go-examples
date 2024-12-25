@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option go_package = "github.com/mukappalambda/go-examples/rpc/grpc/noteserver";
+
+package note;
+
+service NoteService {
+	rpc CreateNote (CreateNoteRequest) returns (CreateNoteResponse) {};
+	rpc GetNote (GetNoteRequest) returns (GetNoteResponse) {};
+	rpc ListNotes (ListNotesRequest) returns (ListNotesResponse) {};
+}
+
+message CreateNoteRequest {
+	string title = 1;
+	string content = 2;
+}
+
+message CreateNoteResponse {
+	string id = 1;
+}
+
+message GetNoteRequest {
+	string id = 1;
+}
+
+message GetNoteResponse {
+	string title = 1;
+	string content = 2;
+}
+
+message ListNotesRequest {}
+
+message ListNotesResponse {
+	repeated Note notes = 1;
+}
+
+message Note {
+	string id = 1;
+	string title = 2;
+	string content = 3;
+}
