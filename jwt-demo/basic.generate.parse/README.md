@@ -10,7 +10,7 @@ Usage of /tmp/go-build1073546655/b001/exe/main:
         issuer (default "my.auth.server")
   -require.exp
         requires exp claim. default to false
-$ # run with the default custom setting
+$ # run with the default setting
 $ go run main.go
 Signed first token successfully, signed token string: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.BgjKCNps7Rx6IPmq_BzL1wwfiVOmpogyowiEi6iVVBk"
 Signed second token successfully, signed token string: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJteS5hdXRoLnNlcnZlciIsImtleSI6InZhbHVlIiwicm9sZXMiOiJhZG1pbiB1c2VyIiwic2NvcGUiOiJyZWFkOm1lc3NhZ2VzIHdyaXRlOm1lc3NhZ2VzIn0.ruVUfO76S2dcW-Y-1dhNHjuTsqgJ5sRbbFi5296ZLg4"
@@ -18,7 +18,7 @@ key: "iss"; value: "my.auth.server"
 key: "key"; value: "value"
 key: "roles"; value: "admin user"
 key: "scope"; value: "read:messages write:messages"
-$ run with different issuer and expected issuer
+$ # run with different issuer and expected issuer
 $ go run main.go -iss test1 -exp.iss test2
 Signed first token successfully, signed token string: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.BgjKCNps7Rx6IPmq_BzL1wwfiVOmpogyowiEi6iVVBk"
 Signed second token successfully, signed token string: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0ZXN0MSIsImtleSI6InZhbHVlIiwicm9sZXMiOiJhZG1pbiB1c2VyIiwic2NvcGUiOiJyZWFkOm1lc3NhZ2VzIHdyaXRlOm1lc3NhZ2VzIn0.9I5treDPfVLcrJX5KRWjYtmgQcenUfjEm7jzkfP-x3A"
