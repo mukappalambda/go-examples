@@ -54,7 +54,7 @@ func run(url string) error {
 
 	// post request
 	jsonStr := []byte(`{"userId": 1, "title": "post title", "body": "post body"}`)
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
+	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(jsonStr))
 	if err != nil {
 		return fmt.Errorf("making post request: %q; %w", url, err)
 	}
