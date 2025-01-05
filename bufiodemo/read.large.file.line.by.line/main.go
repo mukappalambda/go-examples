@@ -2,24 +2,31 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
+	"io"
 	"log"
 	"os"
 )
 
 func main() {
-	f, err := os.Open("large_file.txt")
+	f, err := os.CreateTemp("", "temp_large_file.txt")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error creating temp file: %s\n", err)
 	}
+	defer os.Remove(f.Name())
 	defer f.Close()
-	scanner := bufio.NewScanner(f)
-	cnt := 1
-	for scanner.Scan() {
-		if cnt > 3 {
-			break
-		}
-		fmt.Printf("Read contents: %s\n", scanner.Text())
-		cnt = cnt + 1
+	count := 10000
+	if _, err := f.Write(bytes.Repeat([]byte("hello?\n"), count)); err != nil {
+		f.Close()
+		log.Fatalf("error writing to temp file: %s\n", err)
 	}
+	if _, err := f.Seek(0, io.SeekStart); err != nil {
+		log.Fatalf("error setting the offset: %s\n", err)
+	}
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		_ = scanner.Text()
+	}
+	fmt.Println("read the large file successfully.")
 }
