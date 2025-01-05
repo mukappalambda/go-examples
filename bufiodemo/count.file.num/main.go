@@ -22,6 +22,7 @@ func main() {
 			if err == io.EOF {
 				break
 			}
+			log.Fatalf("error reading string from file: %s\n", err)
 		}
 		num++
 	}
