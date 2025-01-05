@@ -2,6 +2,8 @@ package main
 
 import (
 	"bufio"
+	"bytes"
+	"fmt"
 	"log"
 	"os"
 )
@@ -27,4 +29,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	buf := bytes.NewBuffer([]byte{})
+	writer := bufio.NewWriter(buf)
+	_, _ = writer.Write([]byte("Go is great.\n"))
+	writer.Flush()
+	fmt.Print(buf.String())
 }
