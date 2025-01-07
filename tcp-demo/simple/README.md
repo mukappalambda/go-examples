@@ -3,10 +3,16 @@
 To start the server:
 
 ```bash
-go run main.go
+go run server/main.go
 ```
 
-To start the client:
+To start the client (method 1):
+
+```bash
+go run client/main.go
+```
+
+To start the client using `nc` (method 2):
 
 ```bash
 nc localhost 8080
