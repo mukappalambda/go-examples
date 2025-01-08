@@ -27,7 +27,7 @@ func main() {
 	}
 
 	for _, image := range images {
-		fmt.Printf("%q\t%q\n", image.RepoTags[0], image.RepoDigests)
+		fmt.Printf("%q\t%q\n", image.RepoTags, image.RepoDigests)
 	}
 
 	// docker pull
