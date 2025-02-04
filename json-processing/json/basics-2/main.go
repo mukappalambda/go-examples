@@ -9,7 +9,7 @@ import (
 
 type Post struct {
 	Userid int    `json:"userId,omitempty"`
-	Id     int    `json:"id,omitempty"`
+	ID     int    `json:"id,omitempty"`
 	Title  string `json:"title,omitempty"`
 	Body   string `json:"body,omitempty"`
 }
@@ -33,7 +33,7 @@ func run() error {
 	}
 
 	for _, post := range posts {
-		fmt.Println(post.Userid, post.Id, post.Title)
+		fmt.Println(post.Userid, post.ID, post.Title)
 	}
 	return nil
 }

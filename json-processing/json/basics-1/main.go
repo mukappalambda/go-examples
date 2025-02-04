@@ -75,5 +75,4 @@ func run() error {
 	}
 	fmt.Println(datMap)
 	return nil
-
 }

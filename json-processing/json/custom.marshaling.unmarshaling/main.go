@@ -7,7 +7,7 @@ import (
 )
 
 type Data struct {
-	Id     int      `json:"id"`
+	ID     int      `json:"id"`
 	Name   string   `json:"name"`
 	Active bool     `json:"is_active"`
 	Emails []string `json:"emails"`
@@ -41,7 +41,7 @@ func (d *Data) UnmarshalJSON(data []byte) error {
 func main() {
 	// marshaling
 	firstData := &Data{
-		Id:     1,
+		ID:     1,
 		Name:   "alpha",
 		Active: true,
 		Emails: []string{"alpha@email.com", "alpha.backup@email.com"},
@@ -52,7 +52,7 @@ func main() {
 	}
 	fmt.Println(string(buf))
 
-	//unmarshaling
+	// unmarshaling
 	var secondData Data
 	err = json.Unmarshal(buf, &secondData)
 	if err != nil {
