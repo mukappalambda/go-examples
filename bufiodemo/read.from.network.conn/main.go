@@ -10,7 +10,7 @@ import (
 
 // This server echoes any message it receives from the client.
 func main() {
-	addr := ":8080"
+	addr := "localhost:8080"
 	ln, err := net.Listen("tcp", addr)
 	if err != nil {
 		log.Printf("failed to listen at %s, %s\n", addr, err)
