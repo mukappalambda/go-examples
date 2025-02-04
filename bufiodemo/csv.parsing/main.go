@@ -42,7 +42,7 @@ func main() {
 
 		// ignore line 1
 		if lineno == 0 {
-			lineno = lineno + 1
+			lineno++
 			continue
 		}
 

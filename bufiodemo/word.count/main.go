@@ -14,7 +14,7 @@ func main() {
 		text := scanner.Text()
 		words := strings.Split(text, " ")
 		for _, word := range words {
-			wordCount[word] = wordCount[word] + 1
+			wordCount[word]++
 		}
 		fmt.Println("--- word count result ---")
 		fmt.Printf("%+v\n", wordCount)
