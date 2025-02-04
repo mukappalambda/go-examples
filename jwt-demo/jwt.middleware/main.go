@@ -26,7 +26,8 @@ func main() {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		err := http.ListenAndServe(addr, nil)
+		server := &http.Server{Addr: addr, ReadHeaderTimeout: 300 * time.Millisecond}
+		err := server.ListenAndServe()
 		if err != nil && err != http.ErrServerClosed {
 			log.Fatal(err)
 		}
@@ -65,7 +66,8 @@ func JWTMiddleware(h http.Handler) http.Handler {
 		}
 		claims := token.Claims
 		ctx := r.Context()
-		ctx = context.WithValue(ctx, "claims", claims)
+		type key string
+		ctx = context.WithValue(ctx, key("claims"), claims)
 		h.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
