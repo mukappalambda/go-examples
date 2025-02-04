@@ -15,7 +15,7 @@ var buf = make([]byte, 1024)
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
-	ln, err := net.Listen("tcp", ":8080")
+	ln, err := net.Listen("tcp", "127.0.0.1:8080")
 	if err != nil {
 		log.Fatalf("error listening on the network address: %s\n", err)
 	}
