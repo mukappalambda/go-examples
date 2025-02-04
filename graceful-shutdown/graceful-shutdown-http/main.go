@@ -37,8 +37,9 @@ func newServer() *http.Server {
 	router := newRouter()
 	setupRoutes(router)
 	srv := &http.Server{
-		Addr:    ":8080",
-		Handler: router,
+		Addr:              ":8080",
+		Handler:           router,
+		ReadHeaderTimeout: 300 * time.Millisecond,
 	}
 	return srv
 }
@@ -49,7 +50,6 @@ func newRouter() *http.ServeMux {
 
 func setupRoutes(router *http.ServeMux) {
 	router.HandleFunc("/", handleRoot())
-
 }
 
 func handleRoot() http.HandlerFunc {
