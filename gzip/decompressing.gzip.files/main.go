@@ -18,7 +18,7 @@ func main() {
 		log.Fatal(err)
 	}
 	defer zr.Close()
-	if _, err := io.Copy(os.Stdout, zr); err != nil {
+	if _, err := io.CopyN(os.Stdout, zr, 4096); err != nil {
 		log.Fatal(err)
 	}
 }

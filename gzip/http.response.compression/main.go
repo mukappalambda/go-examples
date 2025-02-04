@@ -2,6 +2,7 @@ package main
 
 import (
 	"compress/gzip"
+	"context"
 	"fmt"
 	"io"
 	"log"
@@ -27,7 +28,11 @@ func main() {
 	defer ts.Close()
 
 	client := ts.Client()
-	res, err := client.Get(ts.URL + "/uncompressed")
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL+"/uncompressed", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	res, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -37,8 +42,12 @@ func main() {
 	}
 
 	fmt.Println()
+	req, err = http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL+"/compressed", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	res, err = client.Get(ts.URL + "/compressed")
+	res, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
 	}

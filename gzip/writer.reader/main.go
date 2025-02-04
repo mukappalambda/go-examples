@@ -26,7 +26,7 @@ func main() {
 		log.Fatalf("error creating reader: %s\n", err)
 	}
 	defer zr.Close()
-	if _, err := io.Copy(os.Stdout, zr); err != nil {
+	if _, err := io.CopyN(os.Stdout, zr, 32768); err != nil {
 		log.Fatalf("error copying to writer from reader: %s\n", err)
 	}
 }
