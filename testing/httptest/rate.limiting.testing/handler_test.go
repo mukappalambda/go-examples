@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -16,7 +17,11 @@ func TestRateLimitedHandler(t *testing.T) {
 
 	num := r + b
 	for i := 0; i < num; i++ {
-		res, err := client.Get(ts.URL)
+		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL, nil)
+		if err != nil {
+			t.Fail()
+		}
+		res, err := client.Do(req)
 		_ = err
 		defer res.Body.Close()
 		if res.StatusCode != http.StatusOK {
@@ -25,7 +30,11 @@ func TestRateLimitedHandler(t *testing.T) {
 		time.Sleep(5 * time.Millisecond)
 	}
 	time.Sleep(20 * time.Millisecond)
-	res, err := client.Get(ts.URL)
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL, nil)
+	if err != nil {
+		t.Fail()
+	}
+	res, err := client.Do(req)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -12,7 +13,11 @@ func TestMyHandler(t *testing.T) {
 	ts := httptest.NewServer(MyHandler())
 	defer ts.Close()
 	client := ts.Client()
-	res, err := client.Get(ts.URL)
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL, nil)
+	if err != nil {
+		t.Fail()
+	}
+	res, err := client.Do(req)
 	_ = err
 	defer res.Body.Close()
 	got := res.StatusCode

@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"fmt"
+	"context"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -17,14 +17,25 @@ func TestMyHandler(t *testing.T) {
 	ts := httptest.NewServer(handler)
 	defer ts.Close()
 	client := ts.Client()
-	res, err := client.Get(fmt.Sprintf("%s/redirect", ts.URL))
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL+"/redirect", nil)
+	if err != nil {
+		t.Fail()
+	}
+	res, err := client.Do(req)
 	_ = err
 	defer res.Body.Close()
 	buf, _ := io.ReadAll(res.Body)
 	if !bytes.Equal(buf, []byte("latest resource")) {
 		t.Fatalf("got: %s; want: %s\n", string(buf), "latest resource")
 	}
-	res, err = client.Get(fmt.Sprintf("%s/noredirect", ts.URL))
+	req, err = http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL+"/noredirect", nil)
+	if err != nil {
+		t.Fail()
+	}
+	res, err = client.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
 	_ = err
 	defer res.Body.Close()
 	buf, err = io.ReadAll(res.Body)

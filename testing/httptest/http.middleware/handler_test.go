@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"fmt"
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -14,7 +14,11 @@ func TestFooMiddleware(t *testing.T) {
 	ts := httptest.NewServer(handler)
 	defer ts.Close()
 	client := ts.Client()
-	res, err := client.Get(fmt.Sprintf("%s/middleware", ts.URL))
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL+"/middleware", nil)
+	if err != nil {
+		t.Fail()
+	}
+	res, err := client.Do(req)
 	_ = err
 	defer res.Body.Close()
 	got := res.Header.Get("X-Custom-Middleware")
