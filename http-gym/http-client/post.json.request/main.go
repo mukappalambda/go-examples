@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -104,7 +105,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	req, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s/comments", ts.URL), bytes.NewBuffer(b))
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodPost, fmt.Sprintf("%s/comments", ts.URL), bytes.NewBuffer(b))
 	if err != nil {
 		log.Fatal(err)
 	}

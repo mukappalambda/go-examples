@@ -40,7 +40,8 @@ func main() {
 func newServer() *Server {
 	return &Server{
 		&http.Server{
-			Addr: ":8080",
+			Addr:        ":8080",
+			ReadTimeout: 500 * time.Millisecond,
 		},
 	}
 }

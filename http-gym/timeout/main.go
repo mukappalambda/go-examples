@@ -15,8 +15,9 @@ func main() {
 	http.HandleFunc("GET /notimeout", h)
 	// curl http://localhost:8080/withtimeout => 503 Service Unavailable
 	http.Handle("GET /withtimeout", handlerWithTimeout)
+	server := &http.Server{Addr: ":8080", ReadHeaderTimeout: 300 * time.Millisecond}
 
-	if err := http.ListenAndServe(":8080", nil); err != nil && err != http.ErrServerClosed {
+	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatal(err)
 	}
 }

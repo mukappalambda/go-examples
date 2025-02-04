@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -28,15 +29,27 @@ func main() {
 	defer ts.Close()
 	client := NewClient()
 
-	_, err := client.Get(fmt.Sprintf("%s/fast", ts.URL))
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL+"/fast", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	_, err = client.Get(fmt.Sprintf("%s/slow", ts.URL))
+	res, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
 	}
+	res.Body.Close()
+	req, err = http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL+"/slow", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	res, err = client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	res.Body.Close()
 }
 
 func NewClient() *http.Client {

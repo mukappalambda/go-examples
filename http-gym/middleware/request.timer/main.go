@@ -15,7 +15,8 @@ func main() {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		if err := http.ListenAndServe(addr, nil); err != nil && err != http.ErrServerClosed {
+		server := &http.Server{Addr: addr, ReadHeaderTimeout: 300 * time.Millisecond}
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("error serving on %s\n", err)
 		}
 	}()

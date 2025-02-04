@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -24,12 +25,15 @@ func main() {
 	if err := run(*url); err != nil {
 		log.Fatal(err)
 	}
-
 }
 
 func run(url string) error {
 	// get request
-	resp, err := http.Get(url)
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, url, nil)
+	if err != nil {
+		return fmt.Errorf("failed to create a new request: %s", err.Error())
+	}
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return fmt.Errorf("making get request %q: %w", url, err)
 	}
@@ -54,7 +58,7 @@ func run(url string) error {
 
 	// post request
 	jsonStr := []byte(`{"userId": 1, "title": "post title", "body": "post body"}`)
-	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(jsonStr))
+	req, err = http.NewRequestWithContext(context.Background(), http.MethodPost, url, bytes.NewBuffer(jsonStr))
 	if err != nil {
 		return fmt.Errorf("making post request: %q; %w", url, err)
 	}
