@@ -3,24 +3,24 @@ package main
 import "fmt"
 
 type Book struct {
-	Id     int32
+	ID     int32
 	Author string
 	Title  string
 }
 
 var books = []Book{
 	{
-		Id:     1,
+		ID:     1,
 		Author: "alex",
 		Title:  "alex's book",
 	},
 	{
-		Id:     2,
+		ID:     2,
 		Author: "bob",
 		Title:  "bob's book",
 	},
 	{
-		Id:     3,
+		ID:     3,
 		Author: "joe",
 		Title:  "joe's book",
 	},
@@ -34,7 +34,7 @@ func main() {
 	var oldBook Book
 	for _, book := range books {
 		if book.Author == "alex" {
-			oldBook.Id = book.Id
+			oldBook.ID = book.ID
 			oldBook.Author = book.Author
 			oldBook.Title = book.Title
 		}
@@ -48,7 +48,7 @@ func main() {
 	fmt.Printf("lastBook: %+v\n", lastBook)
 
 	book1 := Book{
-		Id:     4,
+		ID:     4,
 		Author: "mark",
 		Title:  "mark's book",
 	}
