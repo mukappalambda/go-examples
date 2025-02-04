@@ -10,7 +10,7 @@ import (
 
 type User struct {
 	gorm.Model
-	UserId int    `json:"user_id,omitempty"`
+	UserID int    `json:"user_id,omitempty"`
 	Name   string `json:"name,omitempty"`
 }
 
@@ -25,14 +25,14 @@ func main() {
 		log.Fatalf("error migrating: %v\n", err)
 	}
 	fmt.Println("creating a single user")
-	db.Create(&User{UserId: 1, Name: "alpha"})
+	db.Create(&User{UserID: 1, Name: "alpha"})
 	users := []User{
 		{
-			UserId: 2,
+			UserID: 2,
 			Name:   "beta",
 		},
 		{
-			UserId: 3,
+			UserID: 3,
 			Name:   "gamma",
 		},
 	}
