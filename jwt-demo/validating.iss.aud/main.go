@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -19,7 +20,8 @@ func main() {
 	defaultAudience := "example.api"
 	http.HandleFunc("GET /token", HandleToken(defaultIssuer, defaultAudience))
 	http.HandleFunc("GET /data", JWTValidator(defaultIssuer, defaultAudience)(HandleData()))
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	server := &http.Server{Addr: ":8080", ReadHeaderTimeout: 300 * time.Millisecond}
+	if err := server.ListenAndServe(); err != nil {
 		log.Fatal(err)
 	}
 }
@@ -100,7 +102,6 @@ func ParseTokenString(tokenString, iss, aud string) (jwt.MapClaims, error) {
 	claims := NewClaims(iss, aud)
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return key, nil
-
 	}, jwt.WithIssuer(iss), jwt.WithAudience(aud))
 	if err != nil {
 		return nil, err

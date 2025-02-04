@@ -77,7 +77,7 @@ func newMapClaims(expRequired bool) jwt.MapClaims {
 func parseTokenString(tokenString string, opts ...jwt.ParserOption) (*jwt.MapClaims, error) {
 	token, err := jwt.Parse(tokenString, myKeyFunc, opts...)
 	if err != nil {
-		return nil, fmt.Errorf("Error parsing the token string: %s", err)
+		return nil, fmt.Errorf("error parsing the token string: %s", err)
 	}
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !ok || !token.Valid {
@@ -88,7 +88,7 @@ func parseTokenString(tokenString string, opts ...jwt.ParserOption) (*jwt.MapCla
 
 func myKeyFunc(token *jwt.Token) (interface{}, error) {
 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-		return nil, fmt.Errorf("Incorrect signing method")
+		return nil, fmt.Errorf("incorrect signing method")
 	}
 	return key, nil
 }
