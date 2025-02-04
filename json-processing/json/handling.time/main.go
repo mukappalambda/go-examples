@@ -8,7 +8,7 @@ import (
 )
 
 type Item struct {
-	Id        int
+	ID        int
 	Name      string
 	Price     int
 	CreatedAt time.Time
@@ -19,14 +19,14 @@ var _ json.Marshaler = (*Item)(nil)
 
 func (i *Item) MarshalJSON() ([]byte, error) {
 	type Tmp struct {
-		Id        int
+		ID        int
 		Name      string
 		Price     int
 		CreatedAt string
 		Duration  string
 	}
 	tmp := &Tmp{
-		Id:        i.Id,
+		ID:        i.ID,
 		Name:      i.Name,
 		Price:     i.Price,
 		CreatedAt: i.CreatedAt.Format(time.RFC3339),
@@ -39,7 +39,7 @@ var _ json.Unmarshaler = (*Item)(nil)
 
 func (i *Item) UnmarshalJSON(data []byte) error {
 	type Tmp struct {
-		Id        int
+		ID        int
 		Name      string
 		Price     int
 		CreatedAt string
@@ -58,7 +58,7 @@ func (i *Item) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("error parsing Duration: %s", err.Error())
 	}
 	item := Item{
-		Id:        tmp.Id,
+		ID:        tmp.ID,
 		Name:      tmp.Name,
 		Price:     tmp.Price,
 		CreatedAt: createdAt,
@@ -70,7 +70,7 @@ func (i *Item) UnmarshalJSON(data []byte) error {
 
 func main() {
 	firstItem := &Item{
-		Id:        1,
+		ID:        1,
 		Name:      "food",
 		Price:     10,
 		CreatedAt: time.Now(),
