@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io"
 	"log"
@@ -17,7 +18,11 @@ func main() {
 	ts := httptest.NewServer(handler)
 	defer ts.Close()
 	client := ts.Client()
-	res, err := client.Get(fmt.Sprintf("%s/data", ts.URL))
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL+"/data", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	res, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -28,7 +33,11 @@ func main() {
 	}
 	fmt.Println("Is GET response correct", bytes.Equal(buf, []byte("data")))
 	id := 123
-	res, err = client.Post(fmt.Sprintf("%s/data/%d", ts.URL, id), "text", nil)
+	req, err = http.NewRequestWithContext(context.Background(), http.MethodPost, fmt.Sprintf("%s/data/%d", ts.URL, id), nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	res, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
 	}
