@@ -45,8 +45,9 @@ func main() {
 
 func newServer(addr string, handler http.Handler) *http.Server {
 	srv := &http.Server{
-		Addr:    addr,
-		Handler: handler,
+		Addr:              addr,
+		Handler:           handler,
+		ReadHeaderTimeout: 300 * time.Millisecond,
 	}
 	return srv
 }

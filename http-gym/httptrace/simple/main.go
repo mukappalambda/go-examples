@@ -30,8 +30,9 @@ func main() {
 		log.Fatal(err)
 	}
 	client := http.DefaultClient
-	_, err = client.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer res.Body.Close()
 }

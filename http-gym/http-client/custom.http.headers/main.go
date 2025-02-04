@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"log"
@@ -41,9 +42,9 @@ func main() {
 }
 
 func requestData(client *http.Client, resourcePath string, args ...string) ([]byte, error) {
-	req, err := http.NewRequest(http.MethodGet, resourcePath, nil)
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, resourcePath, nil)
 	if err != nil {
-		return nil, fmt.Errorf("error creating new request: %s\n", err)
+		return nil, fmt.Errorf("error creating new request: %s", err)
 	}
 	if len(args) == 2 {
 		key := args[0]
@@ -52,12 +53,12 @@ func requestData(client *http.Client, resourcePath string, args ...string) ([]by
 	}
 	res, err := client.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("error making HTTP GET request: %s\n", err)
+		return nil, fmt.Errorf("error making HTTP GET request: %s", err)
 	}
 	defer res.Body.Close()
 	b, err := io.ReadAll(res.Body)
 	if err != nil {
-		return nil, fmt.Errorf("error reading response: %s\n", err)
+		return nil, fmt.Errorf("error reading response: %s", err)
 	}
 	return b, nil
 }
