@@ -3,6 +3,7 @@ package http
 import (
 	"log"
 	"net/http"
+	"time"
 
 	httpPort "github.com/mukappalambda/go-examples/gin-demo/internal/core/ports/http"
 
@@ -11,11 +12,11 @@ import (
 	"github.com/mukappalambda/go-examples/gin-demo/internal/data"
 )
 
-type GinHttpServer struct {
+type GinHTTPServer struct {
 	engine *gin.Engine
 }
 
-var _ httpPort.HTTPServer = (*GinHttpServer)(nil)
+var _ httpPort.HTTPServer = (*GinHTTPServer)(nil)
 
 var books = data.Books
 
@@ -27,7 +28,7 @@ func NewBook(c *gin.Context) {
 	var book repository.Book
 
 	if c.BindJSON(&book) == nil {
-		log.Println(book.Id)
+		log.Println(book.ID)
 		log.Println(book.Author)
 		log.Println(book.Title)
 		books = append(books, book)
@@ -36,17 +37,22 @@ func NewBook(c *gin.Context) {
 	c.JSON(http.StatusCreated, book)
 }
 
-func NewServer() *GinHttpServer {
+func NewServer() *GinHTTPServer {
 	engine := gin.Default()
 	bookRoutes := engine.Group("/books")
 	{
 		bookRoutes.GET("/", GetBooks)
 		bookRoutes.POST("/", NewBook)
 	}
-	srv := &GinHttpServer{engine: engine}
+	srv := &GinHTTPServer{engine: engine}
 	return srv
 }
 
-func (s *GinHttpServer) Run(addr string) error {
-	return http.ListenAndServe(addr, s.engine.Handler())
+func (s *GinHTTPServer) Run(addr string) error {
+	server := &http.Server{
+		Addr:              addr,
+		Handler:           s.engine.Handler(),
+		ReadHeaderTimeout: 300 * time.Millisecond,
+	}
+	return server.ListenAndServe()
 }
