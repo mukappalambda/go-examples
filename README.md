@@ -2,7 +2,7 @@
 
 For learning purposes only.
 
-![Alt](animated/hello.gif)
+![Alt](docs/hello.gif)
 
 ## Table of Contents
 
