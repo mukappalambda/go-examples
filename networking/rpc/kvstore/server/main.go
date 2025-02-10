@@ -7,7 +7,7 @@ import (
 	"net/rpc"
 	"os"
 
-	"github.com/mukappalambda/go-examples/rpc/kvstore/shared"
+	"github.com/mukappalambda/go-examples/networking/rpc/kvstore/shared"
 )
 
 type StoreService struct {

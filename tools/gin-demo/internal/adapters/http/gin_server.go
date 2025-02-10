@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"time"
 
-	httpPort "github.com/mukappalambda/go-examples/gin-demo/internal/core/ports/http"
+	httpPort "github.com/mukappalambda/go-examples/tools/gin-demo/internal/core/ports/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mukappalambda/go-examples/gin-demo/internal/core/repository"
-	"github.com/mukappalambda/go-examples/gin-demo/internal/data"
+	"github.com/mukappalambda/go-examples/tools/gin-demo/internal/core/repository"
+	"github.com/mukappalambda/go-examples/tools/gin-demo/internal/data"
 )
 
 type GinHTTPServer struct {

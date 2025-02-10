@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/mukappalambda/go-examples/rpc/grpc/noteserver";
+option go_package = "github.com/mukappalambda/go-examples/networking/rpc/grpc/note-server";
 
 package note;
 
