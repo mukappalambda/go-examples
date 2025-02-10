@@ -7,7 +7,7 @@ import (
 	"net"
 	"time"
 
-	pb "github.com/mukappalambda/go-examples/rpc/grpc/note.server/note"
+	pb "github.com/mukappalambda/go-examples/networking/rpc/grpc/note-server/note"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/health"
