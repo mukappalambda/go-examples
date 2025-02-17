@@ -1,6 +1,6 @@
 module github.com/mukappalambda/go-examples
 
-go 1.23.0
+go 1.24.0
 
 require (
 	github.com/gin-gonic/gin v1.10.0
