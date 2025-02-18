@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -14,11 +15,18 @@ type Server struct {
 	*http.Server
 }
 
+var (
+	port            = flag.Uint("port", 8080, "server port")
+	readTimeout     = flag.Duration("read-timeout", 500*time.Millisecond, "server read timeout")
+	shutdownTimeout = flag.Duration("shutdown-timeout", 5*time.Second, "server shutdown timeout")
+)
+
 func main() {
-	srv := newServer()
+	flag.Parse()
+	addr := fmt.Sprintf(":%d", *port)
+	srv := newServer(addr, *readTimeout)
 	srv.setupRoutes()
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
-	defer stop()
 
 	go func() {
 		if err := srv.run(); err != nil && err != http.ErrServerClosed {
@@ -29,20 +37,18 @@ func main() {
 	<-ctx.Done()
 	stop()
 	fmt.Println("Server is gracefully shutting down...")
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
+	ctx, cancel := context.WithTimeout(context.Background(), *shutdownTimeout)
 	if err := srv.Shutdown(ctx); err != nil {
+		cancel()
 		log.Fatalf("Server forces to shut down. %s", err)
 	}
+	cancel()
 	fmt.Println("Server is down.")
 }
 
-func newServer() *Server {
+func newServer(addr string, readTimeout time.Duration) *Server {
 	return &Server{
-		&http.Server{
-			Addr:        ":8080",
-			ReadTimeout: 500 * time.Millisecond,
-		},
+		&http.Server{Addr: addr, ReadTimeout: readTimeout},
 	}
 }
 
