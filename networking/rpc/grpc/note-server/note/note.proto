@@ -1,13 +1,16 @@
 syntax = "proto3";
 
-option go_package = "github.com/mukappalambda/go-examples/networking/rpc/grpc/note-server";
+option go_package = "github.com/mukappalambda/go-examples/networking/rpc/grpc/note_server";
 
 package note;
+
+import "google/rpc/status.proto";
+import "google/protobuf/timestamp.proto";
 
 service NoteService {
 	rpc CreateNote (CreateNoteRequest) returns (CreateNoteResponse) {};
 	rpc GetNote (GetNoteRequest) returns (GetNoteResponse) {};
-	rpc ListNotes (ListNotesRequest) returns (ListNotesResponse) {};
+	rpc ListNotes (ListNotesRequest) returns (stream Note) {};
 }
 
 message CreateNoteRequest {
@@ -24,18 +27,23 @@ message GetNoteRequest {
 }
 
 message GetNoteResponse {
-	string title = 1;
-	string content = 2;
+	google.rpc.Status error = 1;
+	Note note = 2;
 }
 
-message ListNotesRequest {}
+message ListNotesRequest {
+	int32 page = 1;
+	int32 page_size = 2;
+}
 
 message ListNotesResponse {
 	repeated Note notes = 1;
+	int32 total_notes = 2;
 }
 
 message Note {
 	string id = 1;
 	string title = 2;
 	string content = 3;
+	google.protobuf.Timestamp created_at = 4;
 }
