@@ -19,12 +19,7 @@ type CommentRequest struct {
 }
 
 func NewCommentRequest(user string, public bool, body string) *CommentRequest {
-	commentReq := &CommentRequest{
-		User:   user,
-		Public: public,
-		Body:   body,
-	}
-	return commentReq
+	return &CommentRequest{User: user, Public: public, Body: body}
 }
 
 type CommentResponse struct {
@@ -97,33 +92,42 @@ var (
 )
 
 func main() {
+	if err := run(); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func run() error {
 	http.HandleFunc("POST /comments", createPost())
 	ts := httptest.NewServer(nil)
 	defer ts.Close()
 	commentReq := NewCommentRequest("alpha", false, "my-comment")
 	b, err := json.Marshal(commentReq)
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("could not marshal comment: %s", err)
 	}
-	req, err := http.NewRequestWithContext(context.Background(), http.MethodPost, fmt.Sprintf("%s/comments", ts.URL), bytes.NewBuffer(b))
+	ctx := context.Background()
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, fmt.Sprintf("%s/comments", ts.URL), bytes.NewBuffer(b))
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("failed to create new request: %s", err)
 	}
 	client := ts.Client()
 	res, err := client.Do(req)
 	if err != nil {
-		log.Fatal(err)
+		res.Body.Close()
+		return fmt.Errorf("failed to send request: %s", err)
 	}
 	defer res.Body.Close()
 	b, err = io.ReadAll(res.Body)
 	if err != nil {
-		log.Fatalf("error reading response body: %s\n", err)
+		return fmt.Errorf("error reading response body: %s", err)
 	}
 	var commentRes CommentResponse
 	if err := json.Unmarshal(b, &commentRes); err != nil {
-		log.Fatalf("error unmarshaling response: %s\n", err)
+		return fmt.Errorf("error unmarshaling response: %s", err)
 	}
 	fmt.Printf("%+v\n", commentRes)
+	return nil
 }
 
 func createPost() http.HandlerFunc {
