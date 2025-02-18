@@ -20,36 +20,46 @@ func (m *myRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
 	return res, err
 }
 
-var _ http.RoundTripper = (*myRoundTripper)(nil)
+var (
+	_  http.RoundTripper = (*myRoundTripper)(nil)
+	ts *httptest.Server
+)
 
 func main() {
 	http.HandleFunc("GET /fast", handleData(0))
 	http.HandleFunc("GET /slow", handleData(500*time.Millisecond))
-	ts := httptest.NewServer(nil)
-	defer ts.Close()
-	client := NewClient()
-
-	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL+"/fast", nil)
-	if err != nil {
+	ts = httptest.NewServer(nil)
+	if err := run(); err != nil {
+		ts.Close()
 		log.Fatal(err)
 	}
+	ts.Close()
+}
 
+func run() error {
+	ctx := context.Background()
+	if err := fetchHTTPResponse(ctx, "/fast"); err != nil {
+		return err
+	}
+	if err := fetchHTTPResponse(ctx, "/slow"); err != nil {
+		return err
+	}
+	return nil
+}
+
+func fetchHTTPResponse(ctx context.Context, path string) error {
+	client := NewClient()
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, ts.URL+path, nil)
+	if err != nil {
+		return fmt.Errorf("failed to create new request to %s: %s", path, err)
+	}
 	res, err := client.Do(req)
 	if err != nil {
-		log.Fatal(err)
+		res.Body.Close()
+		return fmt.Errorf("failed to send request: %s", err)
 	}
 	res.Body.Close()
-	req, err = http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL+"/slow", nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	res, err = client.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	res.Body.Close()
+	return nil
 }
 
 func NewClient() *http.Client {
