@@ -3,8 +3,8 @@ module github.com/mukappalambda/go-examples/networking/rpc/grpc/note_server
 go 1.24.0
 
 require (
-	github.com/mukappalambda/go-examples v0.0.0-20250218134628-b9bcf11950ec
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250212204824-5a70512c5d8b
+	github.com/google/uuid v1.6.0
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250218202821-56aae31c358a
 	google.golang.org/grpc v1.70.0
 	google.golang.org/protobuf v1.36.5
 )

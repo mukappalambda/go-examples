@@ -7,6 +7,7 @@ import (
 	"net"
 	"time"
 
+	"github.com/google/uuid"
 	pb "github.com/mukappalambda/go-examples/networking/rpc/grpc/note_server/note"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -15,10 +16,12 @@ import (
 	"google.golang.org/grpc/orca"
 	"google.golang.org/grpc/peer"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type server struct {
 	pb.UnimplementedNoteServiceServer
+	notes []*pb.Note
 }
 
 func (s *server) CreateNote(ctx context.Context, req *pb.CreateNoteRequest) (*pb.CreateNoteResponse, error) {
@@ -26,18 +29,30 @@ func (s *server) CreateNote(ctx context.Context, req *pb.CreateNoteRequest) (*pb
 	if !ok {
 		return nil, status.Errorf(codes.Internal, "internal error")
 	}
-	log.Printf("[client@%s] created a note - title: %q\n", p.Addr.String(), req.GetTitle())
-	res := &pb.CreateNoteResponse{
-		Id: fmt.Sprintf("id-of-%s", req.GetTitle()),
+	noteID := uuid.New().String()
+	noteTitle := req.GetTitle()
+	noteContent := req.GetContent()
+	note := &pb.Note{
+		Id:        noteID,
+		Title:     noteTitle,
+		Content:   noteContent,
+		CreatedAt: timestamppb.Now(),
 	}
-	return res, nil
+	s.notes = append(s.notes, note)
+	log.Printf("[client@%s] created a note (id: %q title: %q) at %s\n", p.Addr.String(), note.GetId(), note.GetTitle(), note.CreatedAt.AsTime())
+	return &pb.CreateNoteResponse{Id: noteID}, nil
 }
 
 func (s *server) GetNote(_ context.Context, _ *pb.GetNoteRequest) (*pb.GetNoteResponse, error) {
 	return nil, nil
 }
 
-func (s *server) ListNotes(_ *pb.ListNotesRequest, _ grpc.ServerStreamingServer[pb.Note]) error {
+func (s *server) ListNotes(_ *pb.ListNotesRequest, stream grpc.ServerStreamingServer[pb.Note]) error {
+	for _, note := range s.notes {
+		if err := stream.Send(note); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
@@ -54,7 +69,7 @@ func stupidInterceptor(ctx context.Context, req any, _ *grpc.UnaryServerInfo, ha
 }
 
 func newServer() *server {
-	return &server{}
+	return &server{notes: make([]*pb.Note, 0)}
 }
 
 func main() {
@@ -72,6 +87,7 @@ func main() {
 	grpcServer := grpc.NewServer(opts...)
 	healthgrpc.RegisterHealthServer(grpcServer, health.NewServer())
 	pb.RegisterNoteServiceServer(grpcServer, newServer())
+	fmt.Printf("server running on %s\n", addr)
 	if err := grpcServer.Serve(ln); err != nil {
 		log.Fatalf("error serving: %v\n", err)
 	}
