@@ -7,7 +7,7 @@ import (
 	"net"
 	"time"
 
-	pb "github.com/mukappalambda/go-examples/networking/rpc/grpc/note-server/note"
+	pb "github.com/mukappalambda/go-examples/networking/rpc/grpc/note_server/note"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/health"
@@ -37,8 +37,8 @@ func (s *server) GetNote(_ context.Context, _ *pb.GetNoteRequest) (*pb.GetNoteRe
 	return nil, nil
 }
 
-func (s *server) ListNotes(_ context.Context, _ *pb.ListNotesRequest) (*pb.ListNotesResponse, error) {
-	return nil, nil
+func (s *server) ListNotes(_ *pb.ListNotesRequest, _ grpc.ServerStreamingServer[pb.Note]) error {
+	return nil
 }
 
 func stupidInterceptor(ctx context.Context, req any, _ *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
