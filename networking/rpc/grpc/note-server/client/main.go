@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -13,7 +14,10 @@ import (
 	"google.golang.org/grpc/keepalive"
 )
 
-var defaultTimeout = time.Second
+var (
+	defaultTimeout = time.Second
+	cancelit       = flag.Bool("cancelit", false, "cancel the client request")
+)
 
 func fooInterceptor(ctx context.Context, method string, req, reply any, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
 	start := time.Now()
@@ -32,6 +36,7 @@ func barInterceptor(ctx context.Context, desc *grpc.StreamDesc, cc *grpc.ClientC
 }
 
 func main() {
+	flag.Parse()
 	port := 50051
 	addr := fmt.Sprintf("localhost:%d", port)
 	opts := []grpc.DialOption{
@@ -50,17 +55,21 @@ func main() {
 	}
 	defer conn.Close()
 	client := pb.NewNoteServiceClient(conn)
-	if err := createFakeNotes(client); err != nil {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	if *cancelit {
+		cancel()
+	}
+
+	if err := createFakeNotes(ctx, client); err != nil {
 		log.Fatal(err)
 	}
-	if err := listNotes(client); err != nil {
+	if err := listNotes(ctx, client); err != nil {
 		log.Fatal(err)
 	}
 }
 
-func listNotes(client pb.NoteServiceClient) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	defer cancel()
+func listNotes(ctx context.Context, client pb.NoteServiceClient) error {
 	stream, err := client.ListNotes(ctx, &pb.ListNotesRequest{Page: 0, PageSize: 0})
 	if err != nil {
 		return fmt.Errorf("failed to list notes: %s", err)
@@ -78,9 +87,7 @@ func listNotes(client pb.NoteServiceClient) error {
 	return nil
 }
 
-func createFakeNotes(client pb.NoteServiceClient) error {
-	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeout)
-	defer cancel()
+func createFakeNotes(ctx context.Context, client pb.NoteServiceClient) error {
 	fakeNotes := []string{"alpha", "beta", "gamma", "delta"}
 	for _, fakeNote := range fakeNotes {
 		req := &pb.CreateNoteRequest{
