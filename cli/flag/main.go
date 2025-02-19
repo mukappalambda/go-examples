@@ -8,47 +8,54 @@ import (
 )
 
 type HyperParam struct {
-	Epochs    int
-	BatchSize int
+	Epochs    uint
+	BatchSize uint
 	Optimizer string
 	Criterion string
 	Dropout   float64
 }
 
+func newHyperParam(epochs uint, batchSize uint, optimizer string, criterion string, dropout float64) HyperParam {
+	return HyperParam{
+		Epochs:    epochs,
+		BatchSize: batchSize,
+		Optimizer: optimizer,
+		Criterion: criterion,
+		Dropout:   dropout,
+	}
+}
+
 var (
-	batchSize = flag.Int("bs", 32, "batch size")
+	batchSize = flag.Uint("bs", 32, "batch size")
 	criterion = flag.String("criterion", "mse", "criterion")
 	dropout   = flag.Float64("dropout", 0.2, "dropout probability")
-	epochs    = flag.Int("epochs", 10, "epochs")
+	epochs    = flag.Uint("epochs", 10, "epochs")
 	optimizer = flag.String("optimizer", "adam", "optimizer")
 )
 
 func main() {
 	flag.Parse()
 
-	if *criterion != "mse" && *criterion != "mae" {
-		fmt.Println("currently supported criteria are 'mae' or 'mse'")
+	if err := run(); err != nil {
+		log.Println(err)
 		os.Exit(1)
 	}
+}
 
-	if *dropout < 0 || *dropout > 1 {
-		fmt.Println("dropout should be in the closed interval [0, 1]")
-		os.Exit(1)
+func run() error {
+	if *criterion != "mse" && *criterion != "mae" {
+		return fmt.Errorf("currently supported criteria are 'mae' or 'mse'")
+	}
+
+	if *dropout > 1 {
+		return fmt.Errorf("dropout should be in the closed interval [0, 1]")
 	}
 
 	if *epochs < 1 {
-		log.Println("epochs flag should be greater than 0")
-		os.Exit(1)
+		return fmt.Errorf("epochs flag should be greater than 0")
 	}
+	hp := newHyperParam(*epochs, *batchSize, *optimizer, *criterion, *dropout)
 
-	hyperParam := HyperParam{
-		Epochs:    *epochs,
-		BatchSize: *batchSize,
-		Optimizer: *optimizer,
-		Criterion: *criterion,
-		Dropout:   *dropout,
-	}
-
-	fmt.Printf("%+v\n", hyperParam)
-	// {Epochs:10 BatchSize:32 Optimizer:adam Criterion:mse Dropout:0.2}
+	fmt.Printf("%+v\n", hp)
+	return nil
 }
