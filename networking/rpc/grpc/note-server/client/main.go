@@ -23,12 +23,21 @@ func fooInterceptor(ctx context.Context, method string, req, reply any, cc *grpc
 	return err
 }
 
+func barInterceptor(ctx context.Context, desc *grpc.StreamDesc, cc *grpc.ClientConn, method string, streamer grpc.Streamer, opts ...grpc.CallOption) (grpc.ClientStream, error) {
+	s, err := streamer(ctx, desc, cc, method, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
 func main() {
 	port := 50051
 	addr := fmt.Sprintf("localhost:%d", port)
 	opts := []grpc.DialOption{
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 		grpc.WithUnaryInterceptor(fooInterceptor),
+		grpc.WithStreamInterceptor(barInterceptor),
 		grpc.WithKeepaliveParams(keepalive.ClientParameters{
 			Time:                defaultTimeout,
 			Timeout:             defaultTimeout,
