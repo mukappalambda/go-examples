@@ -10,6 +10,7 @@ import (
 	pb "github.com/mukappalambda/go-examples/networking/rpc/grpc/note_server/note"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/keepalive"
 )
 
 var defaultTimeout = time.Second
@@ -28,6 +29,11 @@ func main() {
 	opts := []grpc.DialOption{
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 		grpc.WithUnaryInterceptor(fooInterceptor),
+		grpc.WithKeepaliveParams(keepalive.ClientParameters{
+			Time:                defaultTimeout,
+			Timeout:             defaultTimeout,
+			PermitWithoutStream: true,
+		}),
 	}
 	conn, err := grpc.NewClient(addr, opts...)
 	if err != nil {
