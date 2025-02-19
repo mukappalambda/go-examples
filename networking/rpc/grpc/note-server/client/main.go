@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	pb "github.com/mukappalambda/go-examples/networking/rpc/grpc/note-server/note"
+	pb "github.com/mukappalambda/go-examples/networking/rpc/grpc/note_server/note"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
