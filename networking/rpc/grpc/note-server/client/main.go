@@ -10,8 +10,10 @@ import (
 
 	pb "github.com/mukappalambda/go-examples/networking/rpc/grpc/note_server/note"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/keepalive"
+	"google.golang.org/grpc/status"
 )
 
 var (
@@ -96,6 +98,10 @@ func createFakeNotes(ctx context.Context, client pb.NoteServiceClient) error {
 		}
 		res, err := client.CreateNote(ctx, req)
 		if err != nil {
+			errorCode := status.Code(err)
+			if errorCode == codes.Canceled {
+				return fmt.Errorf("request got canceled: %s", errorCode)
+			}
 			return fmt.Errorf("error creating note: %v", err)
 		}
 		fmt.Printf("response: %+v\n", res)
