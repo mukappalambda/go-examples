@@ -4,7 +4,7 @@ Reference: [getting started with containerd](https://github.com/containerd/conta
 
 The platform I use at the moment of documenting this note is WSL2 (Ubuntu 20.04.6 LTS):
 
-```bash
+```console
 $ cat /etc/os-release
 NAME="Ubuntu"
 VERSION="20.04.6 LTS (Focal Fossa)"
@@ -21,19 +21,20 @@ UBUNTU_CODENAME=focal
 ```
 
 To get into the world of `containerd`, I follow the guide mentioned in the above reference:
+
 - Installing `containerd` v1.7.2
 - Installing `runc` v1.1.7
 - Installing CNI plugins v1.3.0
 
 After having these tools installed on the system, I start up the containerd service in the background:
 
-```bash
+```console
 $ nohup sudo containerd &
 ```
 
 And now I can see the containerd server is running:
 
-```bash
+```console
 $ sudo ctr version
 Client:
   Version:  v1.7.2
@@ -48,7 +49,7 @@ Server:
 
 Before interacting with the `containerd` server, I pull the `golang:alpine` image from Docker Hub using `docker`:
 
-```bash
+```console
 $ docker pull golang:alpine
 alpine: Pulling from library/golang
 31e352740f53: Pull complete
@@ -62,7 +63,7 @@ docker.io/library/golang:alpine
 
 This time, let's try to pull the same image using the `ctr` command line tool.
 
-```bash
+```console
 $ sudo ctr images ls
 REF TYPE DIGEST SIZE PLATFORMS LABELS
 $ sudo ctr image pull docker.io/library/golang:alpine
@@ -85,7 +86,7 @@ docker.io/library/golang:alpine application/vnd.docker.distribution.manifest.lis
 
 And now we are able to perform normal routines of manipulating containers as we do via `docker`:
 
-```bash
+```console
 $ sudo ctr container ls
 CONTAINER    IMAGE    RUNTIME
 $ sudo ctr run -d docker.io/library/golang:alpine golang
