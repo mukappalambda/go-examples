@@ -3,6 +3,7 @@
 For learning purposes only.
 
 ![Alt](docs/hello.gif)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmukappalambda%2Fgo-examples.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmukappalambda%2Fgo-examples?ref=badge_shield)
 
 ## Table of Contents
 
@@ -66,3 +67,7 @@ Basically, all the intermediate-to-advanced knowledge already resides in there.
 ---
 
 [Back to top](#go-examples)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmukappalambda%2Fgo-examples.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmukappalambda%2Fgo-examples?ref=badge_large)
