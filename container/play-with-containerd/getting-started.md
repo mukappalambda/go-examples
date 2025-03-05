@@ -2,49 +2,51 @@
 
 Reference: [getting started with containerd](https://github.com/containerd/containerd/blob/main/docs/getting-started.md)
 
-The platform I use at the moment of documenting this note is WSL2 (Ubuntu 20.04.6 LTS):
+The platform I use at the moment of documenting this note is WSL2 (Ubuntu 24.04.1 LTS):
 
 ```console
 $ cat /etc/os-release
+PRETTY_NAME="Ubuntu 24.04.1 LTS"
 NAME="Ubuntu"
-VERSION="20.04.6 LTS (Focal Fossa)"
+VERSION_ID="24.04"
+VERSION="24.04.1 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
 ID=ubuntu
 ID_LIKE=debian
-PRETTY_NAME="Ubuntu 20.04.6 LTS"
-VERSION_ID="20.04"
 HOME_URL="https://www.ubuntu.com/"
 SUPPORT_URL="https://help.ubuntu.com/"
 BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
 PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
-VERSION_CODENAME=focal
-UBUNTU_CODENAME=focal
+UBUNTU_CODENAME=noble
+LOGO=ubuntu-logo
 ```
 
 To get into the world of `containerd`, I follow the guide mentioned in the above reference:
 
-- Installing `containerd` v1.7.2
-- Installing `runc` v1.1.7
-- Installing CNI plugins v1.3.0
+- Installing `containerd` [v2.0.3](https://github.com/containerd/containerd/releases/tag/v2.0.3)
+- Installing `runc` [v1.3.0-rc.1](https://github.com/opencontainers/runc/releases/tag/v1.3.0-rc.1)
+- Installing CNI plugins [v1.6.2](https://github.com/containernetworking/plugins/releases/tag/v1.6.2)
 
 After having these tools installed on the system, I start up the containerd service in the background:
 
 ```console
-$ nohup sudo containerd &
+$ sudo nohup containerd &
 ```
 
 And now I can see the containerd server is running:
 
 ```console
 $ sudo ctr version
+[sudo] password for mklan:
 Client:
-  Version:  v1.7.2
-  Revision: 0cae528dd6cb557f7201036e9f43420650207b58
-  Go version: go1.20.4
+  Version:  v2.0.3
+  Revision: 06b99ca80cdbfbc6cc8bd567021738c9af2b36ce
+  Go version: go1.23.6
 
 Server:
-  Version:  v1.7.2
-  Revision: 0cae528dd6cb557f7201036e9f43420650207b58
-  UUID: 447aecde-91ac-4d8c-b66b-f759ebd77bc9
+  Version:  v2.0.3
+  Revision: 06b99ca80cdbfbc6cc8bd567021738c9af2b36ce
+  UUID: 823c67db-887e-4728-a446-1ce02aed54d0
 ```
 
 Before interacting with the `containerd` server, I pull the `golang:alpine` image from Docker Hub using `docker`:
