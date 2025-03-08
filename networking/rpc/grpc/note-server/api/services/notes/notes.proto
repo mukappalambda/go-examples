@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package noteserver.api.services.notes;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/mukappalambda/go-examples/networking/rpc/grpc/note_server/api/services/notes;notes";
+
+service NoteService {
+  rpc GetNote(GetNoteRequest) returns (GetNoteResponse);
+  rpc CreateNote(CreateNoteRequest) returns (CreateNoteResponse);
+  rpc List(ListNotesRequest) returns (ListNotesResponse);
+  rpc ListStream(ListNotesRequest) returns (stream ListNoteMessage);
+  rpc UpdateNote(UpdateNoteRequest) returns (UpdateNoteResponse);
+  rpc DeleteNote(DeleteNoteRequest) returns (google.protobuf.Empty);
+}
+
+message Note {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message GetNoteRequest {
+	string id = 1;
+}
+
+message GetNoteResponse {
+	Note note = 1;
+}
+
+message CreateNoteRequest {
+	Note note = 1;
+}
+
+message CreateNoteResponse {
+	Note note = 1;
+}
+
+message ListNotesRequest {
+	repeated string filters = 1;
+}
+
+message ListNotesResponse {
+  repeated Note notes = 1;
+}
+
+message ListNoteMessage {
+	Note note = 1;
+}
+
+message UpdateNoteRequest {
+	Note note = 1;
+	google.protobuf.FieldMask update_mask = 2;
+}
+
+message UpdateNoteResponse {
+	Note note = 1;
+}
+
+message DeleteNoteRequest {
+	string id = 1;
+}
