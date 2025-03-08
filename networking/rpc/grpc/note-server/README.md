@@ -4,26 +4,35 @@ Install Go plugins for the protocol compiler if you haven't:
 
 (ref: [gRPC Quick Start](https://grpc.io/docs/languages/go/quickstart/))
 
-```bash
-go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-```
+Build:
 
 ```bash
-git clone --depth 1 https://github.com/googleapis/googleapis.git
-git clone --depth 1 https://github.com/protocolbuffers/protobuf.git
-
 make build
 ```
 
-Server:
+Start the server:
 
 ```bash
-go run server/main.go
+./bin/noted
 ```
 
-Client:
+Start the client:
 
 ```bash
-go run client/main.go
+./bin/note-cli
+```
+
+Generate proto files:
+
+```bash
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+
+make protoc
+```
+
+Clean binaries:
+
+```bash
+make clean
 ```
