@@ -61,7 +61,7 @@ func run() error {
 	}
 	conn, err := grpc.NewClient(addr, opts...)
 	if err != nil {
-		log.Fatalf("error creating client connection: %+v\n", err)
+		return fmt.Errorf("error creating client connection: %+v", err)
 	}
 	defer conn.Close()
 	client := pb.NewNoteServiceClient(conn)
