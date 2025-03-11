@@ -4,8 +4,8 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"log"
 	"net/http"
+	"os"
 	"os/signal"
 	"syscall"
 	"time"
@@ -18,6 +18,13 @@ var (
 )
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	flag.Parse()
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
@@ -27,20 +34,27 @@ func main() {
 
 	srv := newServer(*addr, handler)
 
+	var err error
 	go func() {
-		if err := srv.ListenAndServeTLS(*certFile, *keyFile); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("Error: %v", err)
-		}
+		err = srv.ListenAndServeTLS(*certFile, *keyFile)
 	}()
+	if err != nil && err != http.ErrServerClosed {
+		return fmt.Errorf("failed to serve HTTP server: %w", err)
+	}
+	fmt.Printf("Server is running at %q\n", *addr)
 	<-ctx.Done()
 	stop()
 	fmt.Println("Server is shutting down...")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatalf("Server forced to shutdown %s.", err)
+		return fmt.Errorf("server forced to shutdown %w", err)
+	}
+	if err != nil && err != http.ErrServerClosed {
+		return fmt.Errorf("server shut down ungracefully: %w", err)
 	}
 	fmt.Println("Server down.")
+	return nil
 }
 
 func newServer(addr string, handler http.Handler) *http.Server {
