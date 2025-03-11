@@ -2,15 +2,22 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io"
-	"log"
 	"os"
 )
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	f, err := os.Open("./main.go")
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("failed to open file: %w", err)
 	}
 	defer f.Close()
 	r := bufio.NewReader(f)
@@ -21,15 +28,16 @@ func main() {
 			if err == io.EOF {
 				break
 			}
-			log.Fatal(err)
+			return fmt.Errorf("failed to read: %w", err)
 		}
 		_, err = w.Write(b)
 		if err != nil {
-			log.Fatal(err)
+			return fmt.Errorf("failed to write bytes: %w", err)
 		}
 		err = w.Flush()
 		if err != nil {
-			log.Fatal(err)
+			return fmt.Errorf("failed to flush: %w", err)
 		}
 	}
+	return nil
 }

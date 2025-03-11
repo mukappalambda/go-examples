@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -23,9 +22,16 @@ type Member struct {
 }
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	f, err := os.Open("./example.csv")
 	if err != nil {
-		log.Fatalf("failed to open csv file: %s\n", err)
+		return fmt.Errorf("failed to open csv file: %w", err)
 	}
 	defer f.Close()
 	reader := bufio.NewReader(f)
@@ -37,7 +43,7 @@ func main() {
 			if err == io.EOF {
 				break
 			}
-			log.Fatalf("failed to read line: %s\n", err)
+			return fmt.Errorf("failed to read line: %w", err)
 		}
 
 		// ignore line 1
@@ -70,4 +76,5 @@ func main() {
 	for _, m := range allMembers {
 		fmt.Printf("%+v\n", m)
 	}
+	return nil
 }

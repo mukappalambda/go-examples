@@ -4,14 +4,20 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"log"
 	"os"
 )
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	f, err := os.Open("./main.go")
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("failed to open file: %w", err)
 	}
 	defer f.Close()
 	fmt.Println("Method 1: Read files using bufio.NewScanner()...")
@@ -21,7 +27,7 @@ func main() {
 	}
 	fmt.Println("Method 2: Read files using bufio.NewReader()...")
 	if _, err := f.Seek(0, io.SeekStart); err != nil {
-		log.Fatalf("error setting the offset: %s\n", err)
+		return fmt.Errorf("error setting the offset: %w", err)
 	}
 	reader := bufio.NewReader(f)
 	for {
@@ -30,8 +36,9 @@ func main() {
 			if err == io.EOF {
 				break
 			}
-			log.Fatalf("error reading from file: %s\n", err)
+			return fmt.Errorf("error reading from file: %w", err)
 		}
 		fmt.Print(line)
 	}
+	return nil
 }
