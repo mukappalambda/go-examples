@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -12,25 +11,36 @@ import (
 )
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	srv := newServer()
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
 
+	var err error
 	go func() {
-		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatal(err)
-		}
+		err = srv.ListenAndServe()
 	}()
 
+	if err != nil && err != http.ErrServerClosed {
+		return err
+	}
+	fmt.Printf("Server is running at %q\n", srv.Addr)
 	<-c
 	fmt.Println("Gracefully shutdown...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatalf("Timeout is reached: %s", err)
+		return fmt.Errorf("timeout is reached: %w", err)
 	}
 	fmt.Println("Server has been shut down.")
+	return nil
 }
 
 func newServer() *http.Server {

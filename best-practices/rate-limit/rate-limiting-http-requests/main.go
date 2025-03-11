@@ -1,17 +1,25 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"time"
 
 	"golang.org/x/time/rate"
 )
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	limiter := rate.NewLimiter(1, 4)
 	fmt.Println("rate is 1; burst is 4")
 	handler := http.DefaultServeMux
@@ -23,17 +31,23 @@ func main() {
 
 	now := time.Now()
 	var elapsed time.Duration
+	ctx := context.Background()
 	for i := 0; i <= 20; i++ {
 		elapsed = time.Since(now)
-		res, err := client.Get(fmt.Sprintf("%s/data", ts.URL))
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, fmt.Sprintf("%s/data", ts.URL), nil)
 		if err != nil {
-			log.Fatal(err)
+			return err
+		}
+		res, err := client.Do(req)
+		if err != nil {
+			return err
 		}
 		defer res.Body.Close()
 		buf, _ := io.ReadAll(res.Body)
 		fmt.Printf("%02d-th request, %s, response: %s", i, elapsed.Truncate(time.Millisecond), string(buf))
 		time.Sleep(200 * time.Millisecond)
 	}
+	return nil
 }
 
 func handleData(limiter *rate.Limiter) http.HandlerFunc {
