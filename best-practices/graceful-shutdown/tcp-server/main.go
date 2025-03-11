@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"io"
 	"log"
 	"net"
+	"os"
 	"os/signal"
 	"syscall"
 )
@@ -13,15 +15,29 @@ import (
 var buf = make([]byte, 1024)
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
-	ln, err := net.Listen("tcp", "127.0.0.1:8080")
+	var err error
+	var ln net.Listener
+	ln, err = net.Listen("tcp", "127.0.0.1:8080")
 	if err != nil {
-		log.Fatalf("error listening on the network address: %s\n", err)
+		return fmt.Errorf("error listening on the network address: %w", err)
 	}
-	go onCtxDone(ctx, ln)
+	go func() {
+		err = onCtxDone(ctx, ln)
+	}()
+	if err != nil {
+		return fmt.Errorf("error closing the listener: %w", err)
+	}
 
-	log.Printf("server listening on %s\n", ln.Addr())
+	fmt.Printf("Server is listening on %q\n", ln.Addr())
 
 	for {
 		conn, err := ln.Accept()
@@ -30,14 +46,16 @@ func main() {
 		}
 		go handleConnection(conn)
 	}
+	return nil
 }
 
-func onCtxDone(ctx context.Context, ln net.Listener) {
+func onCtxDone(ctx context.Context, ln net.Listener) error {
 	<-ctx.Done()
 	if err := ln.Close(); err != nil {
-		log.Printf("error closing the listener: %s\n", err)
+		return err
 	}
-	log.Println("listener is shut down gracefully.")
+	log.Println("Listener has gracefully shut down.")
+	return nil
 }
 
 func handleConnection(conn net.Conn) {
