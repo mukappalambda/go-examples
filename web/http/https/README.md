@@ -6,14 +6,26 @@ Generate the server key and server certificate:
 bash run.sh
 ```
 
-Run the application:
+Build:
 
 ```bash
-go run main.go
+make build
+```
+
+Start the server:
+
+```bash
+./bin/https-server
 ```
 
 Make a client request:
 
 ```bash
 curl --insecure https://localhost:4443
+```
+
+Clean the binary:
+
+```bash
+make clean
 ```
