@@ -4,14 +4,20 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"log"
 	"os"
 )
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	f, err := os.Open("./main.go")
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("failed to open file: %w", err)
 	}
 	defer f.Close()
 	r := bufio.NewReader(f)
@@ -22,9 +28,10 @@ func main() {
 			if err == io.EOF {
 				break
 			}
-			log.Fatalf("error reading string from file: %s\n", err)
+			return fmt.Errorf("error reading string from file: %w", err)
 		}
 		num++
 	}
 	fmt.Printf("Number of lines in main.go: %d\n", num)
+	return nil
 }
