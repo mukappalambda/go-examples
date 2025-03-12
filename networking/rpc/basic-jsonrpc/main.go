@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 	"io"
-	"log"
 	"net"
 	"net/rpc"
 	"net/rpc/jsonrpc"
+	"os"
 )
 
 type Args struct {
@@ -23,20 +23,33 @@ type Reply struct {
 type Foo struct{}
 
 func (f *Foo) Run(args Args, reply *Reply) error {
+	if args.Name == "" {
+		return fmt.Errorf("invalid name: %q", args.Name)
+	}
+	if args.Age < 0 {
+		return fmt.Errorf("invalid age: %q", args.Age)
+	}
 	reply.Output = fmt.Sprintf("%+v", args)
 	return nil
 }
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	ln, err := net.Listen("tcp", "127.0.0.1:0")
 	if err != nil {
-		log.Fatalf("error listening: %s\n", err)
+		return fmt.Errorf("error listening: %w", err)
 	}
 	defer ln.Close()
 	serverAddr := ln.Addr().String()
 	server := rpc.NewServer()
 	if err := server.Register(new(Foo)); err != nil {
-		log.Fatalf("error registering service: %s\n", err)
+		return fmt.Errorf("error registering service: %w", err)
 	}
 	go func(ln net.Listener) {
 		for {
@@ -53,7 +66,7 @@ func main() {
 	}(ln)
 	conn, err := net.Dial("tcp", serverAddr)
 	if err != nil {
-		log.Fatalf("error connecting to the network: %s\n", err)
+		return fmt.Errorf("error connecting to the network: %w", err)
 	}
 	codec := jsonrpc.NewClientCodec(conn)
 	client := rpc.NewClientWithCodec(codec)
@@ -66,7 +79,8 @@ func main() {
 	}
 	reply := Reply{}
 	if err := client.Call("Foo.Run", args, &reply); err != nil {
-		log.Fatalf("error invoking the named function: %s\n", err)
+		return fmt.Errorf("error invoking the named function: %w", err)
 	}
 	fmt.Printf("%+v\n", reply)
+	return nil
 }

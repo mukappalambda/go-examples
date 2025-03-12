@@ -31,7 +31,7 @@ func (ss *StoreService) Get(args shared.Args, reply *shared.Reply) error {
 	return nil
 }
 
-func (ss *StoreService) Set(args shared.Args, reply *shared.Reply) error {
+func (ss *StoreService) Set(args shared.Args, _ *shared.Reply) error { //nolint
 	k := args.Key
 	v := args.Value
 	ss.Data[k] = v
@@ -50,18 +50,24 @@ func (ss *StoreService) Delete(args shared.Args, reply *shared.Reply) error {
 }
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	addr := "127.0.0.1:8080"
 	ln, err := net.Listen("tcp", addr)
 	if err != nil {
-		log.Fatalf("Error listening on %s\n", err)
+		return fmt.Errorf("error listening on %w", err)
 	}
 	defer ln.Close()
 	rpcServer := rpc.NewServer()
 	err = rpcServer.Register(NewStoreService())
 	if err != nil {
-		log.Printf("Error registering service: %s\n", err)
 		ln.Close()
-		os.Exit(1)
+		return fmt.Errorf("error registering service: %w", err)
 	}
 	for {
 		conn, err := ln.Accept()

@@ -35,32 +35,40 @@ type Reply struct {
 }
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	port := 8080
-	addr := fmt.Sprintf(":%d", port)
+	addr := fmt.Sprintf("127.0.0.1:%d", port)
+	var err error
 	ln, err := net.Listen("tcp", addr)
 	if err != nil {
-		log.Fatalf("Error listening on %s\n", addr)
+		return fmt.Errorf("error listening on %q: %w", addr, err)
 	}
 	defer ln.Close()
 
 	newServer := rpc.NewServer()
 	err = newServer.Register(new(Feat))
 	if err != nil {
-		log.Fatalf("Error registering methods: %s\n", err)
+		return fmt.Errorf("error registering methods: %w", err)
 	}
 
 	go func() {
-		conn, err := ln.Accept()
-		if err != nil {
-			log.Println(err)
-			ln.Close()
-			os.Exit(1)
-		}
+		conn, e := ln.Accept()
+		err = e
 		go func(conn net.Conn) {
 			defer conn.Close()
 			newServer.ServeConn(conn)
 		}(conn)
 	}()
+	if err != nil {
+		ln.Close()
+		return fmt.Errorf("failed to accept connection: %w", err)
+	}
 
 	serverAddr := ln.Addr().String()
 	log.Println("Server listening on", serverAddr)
@@ -77,15 +85,14 @@ func main() {
 
 	client, err := rpc.Dial("tcp", serverAddr)
 	if err != nil {
-		log.Fatalf("Error establishing connection: %s\n", err)
+		return fmt.Errorf("error establishing connection: %w", err)
 	}
 	defer client.Close()
 
 	err = client.Call("Feat.Compute", args, reply)
 	if err != nil {
-		log.Println(err)
 		client.Close()
-		os.Exit(1)
+		return fmt.Errorf("failed to call remote method: %w", err)
 	}
 	fmt.Printf("Reply: %+v\n", reply)
 
@@ -96,7 +103,8 @@ func main() {
 	reply = new(Reply)
 	err = client.Call("Feat.Compute", args, reply)
 	if err != nil {
-		log.Println(err)
+		client.Close()
+		return fmt.Errorf("failed to call remote method: %w", err)
 	}
 
 	args = &Args{
@@ -106,6 +114,8 @@ func main() {
 	reply = new(Reply)
 	err = client.Call("Feat.Compute", args, reply)
 	if err != nil {
-		log.Println(err)
+		client.Close()
+		return fmt.Errorf("failed to call remote method: %w", err)
 	}
+	return nil
 }
