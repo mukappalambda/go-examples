@@ -4,13 +4,15 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/websocket"
 )
 
 func main() {
 	http.HandleFunc("/chat", HandleWS())
-	if err := http.ListenAndServe(":8080", nil); err != nil && err != http.ErrServerClosed {
+	server := &http.Server{Addr: ":8080", ReadTimeout: time.Second}
+	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatal(err)
 	}
 }
