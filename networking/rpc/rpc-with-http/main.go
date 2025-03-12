@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net"
 	"net/http/httptest"
 	"net/rpc"
@@ -20,21 +19,27 @@ type Reply struct {
 
 type Foo struct{}
 
-func (f *Foo) Run(args Args, reply *Reply) error {
+func (f *Foo) Run(args Args, reply *Reply) error { //nolint
 	reply.Result = fmt.Sprintf("%s %s", args.FirstName, args.LastName)
 	return nil
 }
-
 func main() {
-	addr := ":8080"
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
+	addr := "127.0.0.1:8080"
 	ln, err := net.Listen("tcp", addr)
 	if err != nil {
-		log.Fatalf("error listening on %s\n", addr)
+		return fmt.Errorf("error listening on %q: %w", addr, err)
 	}
 	defer ln.Close()
 	server := rpc.NewServer()
 	if err := server.Register(new(Foo)); err != nil && err != rpc.ErrShutdown {
-		log.Fatal(err)
+		return err
 	}
 	go server.Accept(ln)
 	server.HandleHTTP("/foo", "/bar")
@@ -45,7 +50,7 @@ func main() {
 
 	client, err := rpc.DialHTTPPath("tcp", httpServerAddr, "/foo")
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer client.Close()
 	args := Args{
@@ -55,9 +60,9 @@ func main() {
 	reply := new(Reply)
 
 	if err := client.Call("Foo.Run", args, &reply); err != nil {
-		log.Println(err)
 		client.Close()
-		os.Exit(1)
+		return err
 	}
 	fmt.Printf("reply: %+v\n", reply)
+	return nil
 }
