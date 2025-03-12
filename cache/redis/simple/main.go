@@ -4,12 +4,20 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/redis/go-redis/v9"
 )
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	addr := "localhost:6379"
 	readTimeout := 500 * time.Millisecond
 	writeTimeout := 500 * time.Millisecond
@@ -27,7 +35,7 @@ func main() {
 	fmt.Printf("client connecting to redis: %s\n", client.Options().Addr)
 	defer client.Close()
 	if err := client.Ping(context.Background()).Err(); err != nil {
-		log.Fatalf("error pinging the redis server: %s\n", err)
+		return fmt.Errorf("error pinging the redis server: %w", err)
 	}
 	ctx := context.Background()
 	cmds, err := client.Pipelined(ctx, func(pipe redis.Pipeliner) error {
@@ -40,8 +48,9 @@ func main() {
 	})
 	if err != nil {
 		client.Close()
-		log.Fatalf("error pipelining: %s\n", err)
+		return fmt.Errorf("error pipelining: %w", err)
 	}
 	fmt.Println(cmds[1].String())
 	fmt.Println(cmds[len(cmds)-1].String())
+	return nil
 }
