@@ -1,10 +1,10 @@
 package main
 
 import (
-	"errors"
+	"crypto/rand"
 	"fmt"
-	"math/rand"
-	"time"
+	"math/big"
+	"os"
 )
 
 type Result struct {
@@ -12,36 +12,40 @@ type Result struct {
 	Error error
 }
 
+var bound int
+
 func main() {
 	c := worker()
 
 	result := <-c
-
 	if err := result.Error; err != nil {
-		fmt.Println("Error:", err)
+		fmt.Fprintln(os.Stderr, err)
 	}
-
-	fmt.Println("Score:", result.Score)
+	fmt.Printf("score: %d\n", result.Score)
 }
 
 func worker() <-chan Result {
 	c := make(chan Result)
+	bound = 5
+	scoreFn := func(i int) int {
+		return 2 * i
+	}
 
 	go func() {
 		defer close(c)
-		var result Result
-		s1 := rand.NewSource(time.Now().UnixNano())
-		r1 := rand.New(s1)
-		v := r1.Intn(10)
-
-		if v < 4 {
-			result = Result{Score: -99, Error: errors.New("too low")}
-		} else {
-			result = Result{Score: v, Error: nil}
+		n, _ := rand.Int(rand.Reader, big.NewInt(10))
+		v := int(n.Int64())
+		score := scoreFn(v)
+		var err error
+		if v < bound {
+			err = fmt.Errorf("sample is lower than %d: %v", bound, v)
+		}
+		result := Result{
+			Score: score,
+			Error: err,
 		}
 
 		c <- result
 	}()
-
 	return c
 }
