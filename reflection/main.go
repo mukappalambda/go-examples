@@ -6,7 +6,7 @@ import (
 )
 
 type User struct {
-	Id    int
+	ID    int
 	Name  string
 	Score float32
 	Tasks []string
@@ -15,7 +15,7 @@ type User struct {
 
 func main() {
 	user := User{
-		Id:    1,
+		ID:    1,
 		Name:  "alex",
 		Score: 10.1,
 		Tasks: []string{"job1", "job2"},
