@@ -22,6 +22,13 @@ func (grw *gzipResponseWriter) Write(b []byte) (int, error) {
 }
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	http.HandleFunc("GET /uncompressed", handleData())
 	http.HandleFunc("GET /compressed", compressionMiddleware(handleData()))
 	ts := httptest.NewServer(nil)
@@ -30,31 +37,32 @@ func main() {
 	client := ts.Client()
 	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL+"/uncompressed", nil)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	res, err := client.Do(req)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer res.Body.Close()
 	if _, err := io.Copy(os.Stdout, res.Body); err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	fmt.Println()
 	req, err = http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL+"/compressed", nil)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	res, err = client.Do(req)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer res.Body.Close()
 	if _, err := io.Copy(os.Stdout, res.Body); err != nil {
-		log.Fatal(err)
+		return err
 	}
+	return nil
 }
 
 func compressionMiddleware(h http.HandlerFunc) http.HandlerFunc {
