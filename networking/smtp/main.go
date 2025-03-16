@@ -4,7 +4,6 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"log"
 	"net/smtp"
 	"os"
 	"strings"
@@ -26,7 +25,6 @@ func main() {
 			fmt.Printf("file does not exist: %q\n", *pass)
 			os.Exit(1)
 		}
-		log.Fatal(err)
 	}
 }
 
