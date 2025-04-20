@@ -1,4 +1,4 @@
-module play-with-containerd
+module github.com/mukappalambda/go-examples/container/containerd
 
 go 1.24.0
 
