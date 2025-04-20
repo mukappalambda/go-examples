@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
+	"os"
 	"sync"
 	"time"
 
@@ -20,7 +20,13 @@ var (
 )
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err.Error())
+		os.Exit(1)
+	}
+}
 
+func run() error {
 	flag.Parse()
 	var wg sync.WaitGroup
 
@@ -36,22 +42,27 @@ func main() {
 	client := mqtt.NewClient(opts)
 
 	if token := client.Connect(); token.Wait() && token.Error() != nil {
-		log.Fatal(token.Error())
+		return fmt.Errorf("%s", token.Error().Error())
 	}
 
 	if token := client.Subscribe(*topic, 0, nil); token.Wait() && token.Error() != nil {
-		log.Fatal(token.Error())
+		return fmt.Errorf("failed to subscribe topic: %s", token.Error().Error())
 	}
 
 	wg.Add(1)
+	var e error
 	go func() {
 		defer wg.Done()
 		if token := client.Publish(*topic, 0, false, *payload); token.Wait() && token.Error() != nil {
-			log.Fatal(token.Error())
+			e = token.Error()
 		}
 	}()
 	wg.Wait()
+	if e != nil {
+		return e
+	}
 	client.Disconnect(250)
+	return nil
 }
 
 func onConn(client mqtt.Client) {

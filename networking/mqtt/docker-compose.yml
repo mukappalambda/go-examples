@@ -1,0 +1,21 @@
+services:
+  app:
+    build: .
+    depends_on:
+      mosquitto:
+        condition: service_started
+        restart: true
+    networks:
+      - my-network
+  mosquitto:
+    image: eclipse-mosquitto:2.0.21
+    container_name: mosquitto
+    ports:
+      - "1883:1883"
+    networks:
+      - my-network
+    volumes:
+      - $PWD/mosquitto/config:/mosquitto/config
+
+networks:
+  my-network:
