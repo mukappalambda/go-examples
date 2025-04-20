@@ -2,12 +2,19 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"log"
 	"os"
 	"time"
 
 	"github.com/redis/go-redis/v9"
+)
+
+var (
+	addr         = flag.String("addr", "redis:6379", "redis address")
+	readTimeout  = flag.Duration("read-timeout", 500*time.Millisecond, "client read timeout")
+	writeTimeout = flag.Duration("write-timeout", 500*time.Millisecond, "client write timeout")
 )
 
 func main() {
@@ -18,18 +25,16 @@ func main() {
 }
 
 func run() error {
-	addr := "localhost:6379"
-	readTimeout := 500 * time.Millisecond
-	writeTimeout := 500 * time.Millisecond
+	flag.Parse()
 	opt := &redis.Options{
-		Addr:       addr,
+		Addr:       *addr,
 		ClientName: "my-redis-client",
 		OnConnect: func(ctx context.Context, cn *redis.Conn) error {
 			log.Printf("client is connected: %s\n", cn.ClientGetName(ctx))
 			return nil
 		},
-		ReadTimeout:  readTimeout,
-		WriteTimeout: writeTimeout,
+		ReadTimeout:  *readTimeout,
+		WriteTimeout: *writeTimeout,
 	}
 	client := redis.NewClient(opt)
 	fmt.Printf("client connecting to redis: %s\n", client.Options().Addr)
