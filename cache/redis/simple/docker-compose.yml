@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .
+    depends_on:
+      redis:
+        condition: service_started
+    networks:
+      - my-service
+  redis:
+    image: redis:8.0-rc1-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - my-service
+
+networks:
+  my-service:
