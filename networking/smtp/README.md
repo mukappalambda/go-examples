@@ -1,6 +1,6 @@
 # Steps
 
-To follow these intructions, you can refer to [this](https://support.google.com/accounts/answer/185833?hl=en)
+To follow these instructions, you can refer to [this](https://support.google.com/accounts/answer/185833?hl=en)
 for how to generate a Google app password, and paste it in the `.password` file.
 
 ```bash
