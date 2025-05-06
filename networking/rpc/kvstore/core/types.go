@@ -1,4 +1,4 @@
-package shared
+package core
 
 type Args struct {
 	Key   string
