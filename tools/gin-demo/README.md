@@ -27,13 +27,13 @@ make down-container
 To add all dependencies:
 
 ```bash
-go get .
+go mod tidy
 ```
 
 To update all dependencies:
 
 ```bash
-go get -u
+go get -u ./...
 go mod tidy
 ```
 

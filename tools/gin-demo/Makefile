@@ -1,6 +1,6 @@
 GO ?= go
 
-APP_NAME=$$(basename $$(pwd))
+APP_NAME='gin-demo-server'
 
 GO_LDFLAGS=-ldflags '-s -w'
 
@@ -9,12 +9,11 @@ help: ## Show help message
 
 clean: ## Clean binaries
 	@echo "$(WHALE) $@"
-	@${GO} clean
-	@rm -f ${APP_NAME}
+	@rm -rf bin
 
 build: clean ## Build the binary
 	@echo "$(WHALE) $@"
-	@go build -o ${APP_NAME} ${GO_LDFLAGS} .
+	@go build -o bin/${APP_NAME} ${GO_LDFLAGS} cmd/gin-demo-server/main.go
 
 build-image: clean ## Build the docker image
 	@echo "$(WHALE) $@"
@@ -30,4 +29,4 @@ down-container: ## Tear down the docker container
 
 run: build ## Run the binary
 	@echo "$(WHALE) $@"
-	@./${APP_NAME}
+	@./bin/${APP_NAME}

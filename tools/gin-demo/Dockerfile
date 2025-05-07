@@ -4,12 +4,12 @@ WORKDIR /src
 
 COPY . .
 
-RUN CGO_ENABLED=0 go build -o /gin-demo -ldflags="-s -w" ./main.go
+RUN CGO_ENABLED=0 go build -o /gin-demo-server -ldflags="-s -w" cmd/gin-demo-server/main.go
 
 FROM scratch
 
-COPY --from=build /gin-demo /gin-demo
+COPY --from=build /gin-demo-server /gin-demo-server
 
 EXPOSE 8080
 
-ENTRYPOINT ["/gin-demo"]
+ENTRYPOINT ["/gin-demo-server"]
