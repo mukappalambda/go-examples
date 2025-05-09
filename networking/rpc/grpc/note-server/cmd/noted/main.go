@@ -29,11 +29,11 @@ func run() error {
 		return fmt.Errorf("error listening on %s", addr)
 	}
 	defer ln.Close()
-	opts := []grpc.ServerOption{
+	serverOpts := []grpc.ServerOption{
 		orca.CallMetricsServerOption(nil),
 		grpc.UnaryInterceptor(services.StupidInterceptor),
 	}
-	grpcServer := grpc.NewServer(opts...)
+	grpcServer := grpc.NewServer(serverOpts...)
 	healthgrpc.RegisterHealthServer(grpcServer, health.NewServer())
 	pb.RegisterNoteServiceServer(grpcServer, services.NewServer())
 	fmt.Printf("server running on %s\n", addr)
