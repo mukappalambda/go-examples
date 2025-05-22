@@ -4,7 +4,7 @@ go 1.24.0
 
 require (
 	github.com/PuerkitoBio/goquery v1.10.2
-	github.com/gofiber/fiber/v2 v2.52.6
+	github.com/gofiber/fiber/v2 v2.52.7
 	github.com/gofiber/swagger v1.1.1
 	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/gorilla/websocket v1.5.3
