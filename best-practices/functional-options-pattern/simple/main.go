@@ -38,13 +38,6 @@ func WithAddr(addr string) Option {
 	}
 }
 
-func WithHandler(mux *http.ServeMux) Option {
-	return func(options *options) {
-		var handler http.Handler = mux
-		options.handler = handler
-	}
-}
-
 func WithReadTimeout(timeout time.Duration) Option {
 	return func(options *options) {
 		options.readTimeout = timeout
