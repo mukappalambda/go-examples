@@ -11,7 +11,7 @@ import (
 )
 
 type MyRoundTripper struct {
-	*log.Logger
+	Logger *log.Logger
 }
 
 func NewMyRoundTripper(logger *log.Logger) *MyRoundTripper {
