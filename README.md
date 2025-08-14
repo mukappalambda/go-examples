@@ -51,7 +51,7 @@ Basically, all the intermediate-to-advanced knowledge already resides in there.
 - 100 Go Mistakes and How to Avoid Them [[github]](https://github.com/teivah/100-go-mistakes)
 - [Go Concurrency Patterns Github](https://github.com/lotusirous/go-concurrency-patterns)
 - [有哪些值得學習的 Go 語言開源項目?](https://www.zhihu.com/question/20801814/answer/1534555951)
-- [Go 語言 101](https://gfw.go101.org/article/101.html)
+- [Go 101](https://go101.org/)
 - [Go 語言簡明教程](https://geektutu.com/post/quick-golang.html)
 - [Go 語言高性能編程](https://geektutu.com/post/high-performance-go.html)
 - [Go Wiki](https://github.com/golang/go/wiki)
