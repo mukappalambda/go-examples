@@ -9,10 +9,10 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
+	"time"
 )
-
-var buf = make([]byte, 1024)
 
 func main() {
 	if err := run(); err != nil {
@@ -25,41 +25,51 @@ func run() error {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 	var err error
-	var ln net.Listener
-	ln, err = net.Listen("tcp", "127.0.0.1:8080")
+	var lc net.ListenConfig
+	ln, err := lc.Listen(ctx, "tcp", "127.0.0.1:8080")
 	if err != nil {
 		return fmt.Errorf("error listening on the network address: %w", err)
 	}
-	go func() {
-		err = onCtxDone(ctx, ln)
-	}()
-	if err != nil {
-		return fmt.Errorf("error closing the listener: %w", err)
-	}
 
-	fmt.Printf("Server is listening on %q\n", ln.Addr())
-
-	for {
-		conn, err := ln.Accept()
-		if err != nil {
-			break
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func(ln net.Listener) {
+		defer wg.Done()
+		for {
+			conn, err := ln.Accept()
+			if err != nil {
+				break
+			}
+			go handleConnection(conn)
 		}
-		go handleConnection(conn)
-	}
-	return nil
-}
-
-func onCtxDone(ctx context.Context, ln net.Listener) error {
+	}(ln)
+	log.Printf("Server is listening on %q\n", ln.Addr())
 	<-ctx.Done()
-	if err := ln.Close(); err != nil {
-		return err
+	log.Println("Server is shutting down...")
+	timeout := 100 * time.Millisecond
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+
+	wg.Add(1)
+	go func(ctx context.Context) {
+		defer wg.Done()
+		<-ctx.Done()
+		if e := ln.Close(); e != nil {
+			err = e
+		}
+		log.Println("Listener has gracefully shut down.")
+	}(shutdownCtx)
+	wg.Wait()
+	if err != nil {
+		return fmt.Errorf("error on shutting down the server: %s", err)
 	}
-	log.Println("Listener has gracefully shut down.")
+	log.Println("Server shut down successfully.")
 	return nil
 }
 
 func handleConnection(conn net.Conn) {
 	defer conn.Close()
+	buf := make([]byte, 1024)
 	for {
 		n, err := conn.Read(buf)
 		if err != nil {
