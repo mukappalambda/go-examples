@@ -2,12 +2,22 @@ package main
 
 import (
 	"compress/gzip"
+	"errors"
+	"flag"
 	"fmt"
 	"io"
 	"os"
 )
 
+var (
+	ErrNoFile = errors.New("Missing input file")
+
+	input = flag.String("in", "", "input file")
+)
+
 func main() {
+	flag.Parse()
+
 	if err := run(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
@@ -15,7 +25,11 @@ func main() {
 }
 
 func run() error {
-	f, err := os.Open("my-file.txt.gz")
+	if len(*input) == 0 {
+		flag.PrintDefaults()
+		return ErrNoFile
+	}
+	f, err := os.Open(*input)
 	if err != nil {
 		return fmt.Errorf("failed to open file: %w", err)
 	}
@@ -24,8 +38,13 @@ func run() error {
 	if err != nil {
 		return fmt.Errorf("failed to create reader: %w", err)
 	}
-	defer zr.Close()
-	if _, err := io.CopyN(os.Stdout, zr, 4096); err != nil {
+	defer func() error {
+		if err := zr.Close(); err != nil {
+			return err
+		}
+		return nil
+	}()
+	if _, err := io.CopyN(os.Stdout, zr, 4096); err != nil && err != io.EOF {
 		return fmt.Errorf("failed to copy from gzip reader: %w", err)
 	}
 	return nil
