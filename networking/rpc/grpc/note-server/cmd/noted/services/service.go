@@ -1,12 +1,12 @@
 package services
 
 import (
-	pb "github.com/mukappalambda/go-examples/networking/rpc/grpc/note_server/api/services/notes"
-
 	"context"
 	"fmt"
 	"log"
 	"time"
+
+	pb "github.com/mukappalambda/go-examples/networking/rpc/grpc/note_server/api/services/notes"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"

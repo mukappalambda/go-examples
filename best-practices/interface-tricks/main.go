@@ -33,9 +33,7 @@ func ScaledTransform(i Ingester, scale float64) Ingester {
 	})
 }
 
-var (
-	scale = flag.Float64("scale", 1.23, "scale coefficient")
-)
+var scale = flag.Float64("scale", 1.23, "scale coefficient")
 
 func main() {
 	flag.Parse()

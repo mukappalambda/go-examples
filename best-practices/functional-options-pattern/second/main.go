@@ -88,7 +88,7 @@ func WithReadHeaderTimeout(d time.Duration) AppOption {
 }
 
 func NewApp(opt ...AppOption) *App {
-	var opts = defaultAppOption
+	opts := defaultAppOption
 	for _, o := range opt {
 		o.apply(opts)
 	}

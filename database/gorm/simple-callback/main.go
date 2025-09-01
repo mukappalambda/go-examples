@@ -19,7 +19,6 @@ func main() {
 func run() error {
 	dsn := "user=postgres password=password dbname=demo host=localhost port=5432 sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-
 	if err != nil {
 		return err
 	}

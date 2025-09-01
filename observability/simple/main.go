@@ -18,6 +18,7 @@ func main() {
 		os.Exit(1)
 	}
 }
+
 func run() error {
 	var stdouttraceOpts []stdouttrace.Option
 	stdouttraceOpts = append(stdouttraceOpts, stdouttrace.WithPrettyPrint())

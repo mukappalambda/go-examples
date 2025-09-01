@@ -7,8 +7,7 @@ import (
 	"github.com/mukappalambda/go-examples/networking/rpc/grpc/note_server/cmd/noted/server"
 )
 
-type app struct {
-}
+type app struct{}
 
 func App() *app {
 	return &app{}
