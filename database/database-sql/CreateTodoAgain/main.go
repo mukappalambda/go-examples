@@ -7,12 +7,8 @@ import (
 	"database/sql"
 
 	_ "github.com/lib/pq"
+	"github.com/mukappalambda/go-examples/examples/database/database-sql/CreateTodoAgain/internal/core/domain"
 )
-
-type Todo struct {
-	Name        string
-	IsCompleted bool
-}
 
 func main() {
 	dataSourceName := "postgres://postgres:password@localhost/my_db?sslmode=disable"
@@ -27,7 +23,7 @@ func main() {
 		log.Fatal(err)
 	}
 	defer stmt.Close()
-	todos := []Todo{
+	todos := []domain.Todo{
 		{Name: "Buy groceries", IsCompleted: false},
 		{Name: "Do laundry", IsCompleted: false},
 		{Name: "Finish project", IsCompleted: true},
