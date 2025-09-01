@@ -23,6 +23,7 @@ func (f *Foo) Run(args Args, reply *Reply) error { //nolint
 	reply.Result = fmt.Sprintf("%s %s", args.FirstName, args.LastName)
 	return nil
 }
+
 func main() {
 	if err := run(); err != nil {
 		fmt.Fprintln(os.Stderr, err)

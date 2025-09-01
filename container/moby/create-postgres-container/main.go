@@ -40,7 +40,8 @@ func run() error {
 			"5432/tcp": {
 				{HostIP: "0.0.0.0", HostPort: "5432"},
 			},
-		}}
+		},
+	}
 	containerName := "postgres"
 	if err := startPostgresContainer(ctx, cli, config, hostConfig, containerName); err != nil {
 		return err

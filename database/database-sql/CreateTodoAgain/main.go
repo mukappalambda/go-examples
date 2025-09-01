@@ -1,10 +1,9 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
-
-	"database/sql"
 
 	_ "github.com/lib/pq"
 	"github.com/mukappalambda/go-examples/examples/database/database-sql/CreateTodoAgain/internal/core/domain"

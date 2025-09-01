@@ -10,9 +10,7 @@ import (
 	"time"
 )
 
-var (
-	n = flag.Int("n", 1, "number of replicated requests")
-)
+var n = flag.Int("n", 1, "number of replicated requests")
 
 func main() {
 	flag.Parse()

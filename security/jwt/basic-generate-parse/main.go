@@ -74,6 +74,7 @@ func newMapClaims(expRequired bool) jwt.MapClaims {
 	}
 	return claims
 }
+
 func parseTokenString(tokenString string, opts ...jwt.ParserOption) (*jwt.MapClaims, error) {
 	token, err := jwt.Parse(tokenString, myKeyFunc, opts...)
 	if err != nil {
