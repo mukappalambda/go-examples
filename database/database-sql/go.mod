@@ -1,11 +1,10 @@
-module postgres-demo
+module github.com/mukappalambda/go-examples/database/database-sql
 
-go 1.23.0
+go 1.25.0
 
 require (
 	github.com/jackc/pgx/v5 v5.7.2
 	github.com/lib/pq v1.10.9
-	github.com/mukappalambda/go-examples v0.0.0-20241029015111-e1b53f2388c3
 )
 
 require (

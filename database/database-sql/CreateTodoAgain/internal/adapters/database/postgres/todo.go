@@ -4,7 +4,7 @@ import (
 	"database/sql"
 
 	_ "github.com/lib/pq"
-	"github.com/mukappalambda/go-examples/examples/database/CreateTodoAgain/internal/core/domain"
+	"github.com/mukappalambda/go-examples/examples/database/database-sql/CreateTodoAgain/internal/core/domain"
 )
 
 type PostgresRepository struct {
