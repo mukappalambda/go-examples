@@ -2,32 +2,27 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
-	"log"
+	"os"
 	"time"
 
-	"database/sql"
-
-	_ "github.com/lib/pq"
+	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
 func main() {
-	dataSourceName := "postgres://postgres:password@localhost/my_db?sslmode=disable"
-	db, err := sql.Open("postgres", dataSourceName)
+	db, err := sql.Open("pgx", os.Getenv("DATABASE_DSN"))
 	if err != nil {
-		log.Fatal(err)
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 	defer db.Close()
-	db.SetMaxOpenConns(50)
-	db.SetConnMaxIdleTime(5 * time.Minute)
-
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	timeout := 5 * time.Second
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	if err := db.PingContext(ctx); err != nil {
-		log.Fatal(err)
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
-	fmt.Println("Database connected.")
-	fmt.Printf("max open connections: %d\n", db.Stats().MaxOpenConnections)
-	// Database connected.
-	// max open connections: 50
+	fmt.Println("ping database successfully.")
 }
