@@ -2,9 +2,10 @@ package main
 
 import (
 	"context"
+	"crypto/rand"
 	"flag"
 	"fmt"
-	"math/rand/v2"
+	"math/big"
 	"runtime"
 	"sync"
 	"time"
@@ -46,7 +47,11 @@ func main() {
 }
 
 func fakeAPI(ctx context.Context, query string) (string, error) {
-	random := rand.IntN(1000)
+	n, err := rand.Int(rand.Reader, big.NewInt(1000))
+	if err != nil {
+		return "", err
+	}
+	random := n.Int64()
 	timer := time.NewTimer(time.Duration(random) * time.Millisecond)
 	defer timer.Stop()
 	select {

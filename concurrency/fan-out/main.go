@@ -2,9 +2,10 @@ package main
 
 import (
 	"context"
+	"crypto/rand"
 	"flag"
 	"fmt"
-	"math/rand/v2"
+	"math/big"
 	"strings"
 	"sync"
 	"time"
@@ -78,7 +79,11 @@ func fanOut(ctx context.Context, in <-chan string, workerCount int, workerFunc f
 }
 
 func toUpperFunc(msg string) string {
-	random := rand.IntN(10)
+	n, err := rand.Int(rand.Reader, big.NewInt(10))
+	if err != nil {
+		return "error happened"
+	}
+	random := n.Int64()
 	time.Sleep(time.Duration(random) * time.Millisecond)
 	return strings.ToUpper(msg)
 }
