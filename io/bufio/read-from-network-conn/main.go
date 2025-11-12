@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"io"
 	"log"
 	"net"
@@ -11,7 +12,8 @@ import (
 // This server echoes any message it receives from the client.
 func main() {
 	addr := "localhost:8080"
-	ln, err := net.Listen("tcp", addr)
+	var lc net.ListenConfig
+	ln, err := lc.Listen(context.Background(), "tcp", addr)
 	if err != nil {
 		log.Printf("failed to listen at %s, %s\n", addr, err)
 		os.Exit(1)
