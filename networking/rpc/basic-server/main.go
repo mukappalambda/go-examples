@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
@@ -45,7 +46,8 @@ func run() error {
 	port := 8080
 	addr := fmt.Sprintf("127.0.0.1:%d", port)
 	var err error
-	ln, err := net.Listen("tcp", addr)
+	var lc net.ListenConfig
+	ln, err := lc.Listen(context.Background(), "tcp", addr)
 	if err != nil {
 		return fmt.Errorf("error listening on %q: %w", addr, err)
 	}

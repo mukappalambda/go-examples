@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net"
 	"net/http/httptest"
@@ -33,7 +34,8 @@ func main() {
 
 func run() error {
 	addr := "127.0.0.1:8080"
-	ln, err := net.Listen("tcp", addr)
+	var lc net.ListenConfig
+	ln, err := lc.Listen(context.Background(), "tcp", addr)
 	if err != nil {
 		return fmt.Errorf("error listening on %q: %w", addr, err)
 	}
