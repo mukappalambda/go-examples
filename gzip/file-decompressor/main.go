@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	ErrNoFile = errors.New("Missing input file")
+	ErrNoFile = errors.New("missing input file")
 
 	input = flag.String("in", "", "input file")
 )
@@ -38,11 +38,10 @@ func run() error {
 	if err != nil {
 		return fmt.Errorf("failed to create reader: %w", err)
 	}
-	defer func() error {
+	defer func() {
 		if err := zr.Close(); err != nil {
-			return err
+			fmt.Fprintf(os.Stderr, "failed to close gzip reader: %s", err)
 		}
-		return nil
 	}()
 	if _, err := io.CopyN(os.Stdout, zr, 4096); err != nil && err != io.EOF {
 		return fmt.Errorf("failed to copy from gzip reader: %w", err)
