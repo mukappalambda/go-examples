@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"net"
@@ -41,7 +42,8 @@ func main() {
 }
 
 func run() error {
-	ln, err := net.Listen("tcp", "127.0.0.1:0")
+	var lc net.ListenConfig
+	ln, err := lc.Listen(context.Background(), "tcp", "127.0.0.1:0")
 	if err != nil {
 		return fmt.Errorf("error listening: %w", err)
 	}
@@ -64,7 +66,8 @@ func run() error {
 			}(conn)
 		}
 	}(ln)
-	conn, err := net.Dial("tcp", serverAddr)
+	var d net.Dialer
+	conn, err := d.Dial("tcp", serverAddr)
 	if err != nil {
 		return fmt.Errorf("error connecting to the network: %w", err)
 	}
