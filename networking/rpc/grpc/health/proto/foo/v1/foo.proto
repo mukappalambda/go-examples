@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option go_package = "github.com/mukappalambda/go-examples/grpc-health/proto/health";
+
+package foo.v1;
+
+message UnaryFooRequest { string message = 1; }
+
+message UnaryFooResponse { string message = 1; }
+
+service FooService {
+  rpc UnaryFoo(UnaryFooRequest) returns (UnaryFooResponse) {}
+}
