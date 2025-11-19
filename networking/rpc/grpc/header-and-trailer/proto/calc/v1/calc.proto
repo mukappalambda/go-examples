@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package calc.v1;
+
+message UnaryCalcRequest { float num = 1; }
+
+message StreamCalcRequest { float num = 1; }
+
+message UnaryCalcResponse { float num = 1; }
+
+message StreamCalcResponse { float num = 1; }
+
+service CalcService {
+  rpc UnaryCalc(UnaryCalcRequest) returns (UnaryCalcResponse) {}
+  rpc StreamCalc(stream StreamCalcRequest) returns (StreamCalcResponse) {}
+}
