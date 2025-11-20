@@ -12,11 +12,22 @@ For learning purposes only.
 ## Table of Contents
 
 - [Go Examples](#go-examples)
+  - [What This Repo Is?](#what-this-repo-is)
+  - [Table of Contents](#table-of-contents)
   - [Guideline](#guideline)
   - [Learning Materials](#learning-materials)
   - [Style Guides](#style-guides)
+  - [License](#license)
 
 <!-- Created by https://github.com/ekalinin/github-markdown-toc -->
+
+---
+
+## What This Repo Is?
+
+This repo is a collection of Go examples.
+
+Each subdirectroy presents one idea through multiple cases.
 
 ---
 
