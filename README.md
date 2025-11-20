@@ -13,7 +13,6 @@ For learning purposes only.
 
 - [Go Examples](#go-examples)
   - [What This Repo Is?](#what-this-repo-is)
-  - [Table of Contents](#table-of-contents)
   - [Guideline](#guideline)
   - [Learning Materials](#learning-materials)
   - [Style Guides](#style-guides)
