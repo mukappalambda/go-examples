@@ -55,7 +55,7 @@ func run() error {
 		err := pubSub.Publish(topicName, msgs...)
 		if err != nil {
 			_ = pubSub.Close()
-			e = fmt.Errorf("failed to publish messagses: %s", err)
+			e = fmt.Errorf("failed to publish messages: %s", err)
 			return
 		}
 	}()
