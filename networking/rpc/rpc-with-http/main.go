@@ -57,7 +57,7 @@ func run() error {
 	}
 	defer client.Close()
 	args := Args{
-		FirstName: "alhpa",
+		FirstName: "alpha",
 		LastName:  "beta",
 	}
 	reply := new(Reply)

@@ -48,7 +48,7 @@ curl --cacert ./root_ca.crt https://127.0.0.1:9443/data
 curl --cacert ./root_ca.crt https://localhost:9443/data
 ```
 
-Connecting to the server programatically:
+Connecting to the server programmatically:
 
 ```bash
 go run client/main.go

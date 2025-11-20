@@ -26,15 +26,15 @@ func main() {
 			continue
 		}
 		trimmedLine := strings.TrimSuffix(string(line), "\n")
-		splitted := strings.Split(trimmedLine, " ")
-		if len(splitted) < 2 {
-			log.Printf("not enough fields; got %d field only\n", len(splitted))
+		split := strings.Split(trimmedLine, " ")
+		if len(split) < 2 {
+			log.Printf("not enough fields; got %d field only\n", len(split))
 			continue
 		}
-		name := splitted[0]
-		score, err := strconv.ParseInt(splitted[1], 10, 64)
+		name := split[0]
+		score, err := strconv.ParseInt(split[1], 10, 64)
 		if err != nil {
-			log.Printf("error parsing %q to integer\n", splitted[1])
+			log.Printf("error parsing %q to integer\n", split[1])
 			continue
 		}
 		data := &Data{
