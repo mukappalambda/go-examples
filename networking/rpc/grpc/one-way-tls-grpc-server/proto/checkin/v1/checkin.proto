@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package checkin.v1;
+
+message CheckInRequest {
+  string message = 1;
+}
+
+message CheckInResponse {
+  string message = 1;
+}
+
+service CheckInService {
+  rpc CheckIn(CheckInRequest) returns (CheckInResponse) {}
+}
