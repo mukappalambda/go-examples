@@ -9,8 +9,11 @@ import (
 	"time"
 
 	calcv1 "github.com/mukappalambda/grpc/headerandtrailer/gen/calc/v1"
+	epb "google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 )
 
 type calcServer struct {
@@ -32,6 +35,18 @@ func (s *calcServer) UnaryCalc(ctx context.Context, req *calcv1.UnaryCalcRequest
 		}
 	}()
 	num := req.GetNum()
+	if num < 0 {
+		st := status.New(codes.InvalidArgument, "invalid num")
+		ds, err := st.WithDetails(&epb.BadRequest_FieldViolation{
+			Field:       "num",
+			Description: "invalid num",
+			Reason:      "Make the num a positive float32",
+		})
+		if err != nil {
+			return nil, st.Err()
+		}
+		return nil, ds.Err()
+	}
 	return &calcv1.UnaryCalcResponse{Num: num}, mdErr
 }
 
