@@ -2,17 +2,23 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"os"
 	"time"
 
 	calcv1 "github.com/mukappalambda/grpc/headerandtrailer/gen/calc/v1"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 )
 
+var num = flag.Int("num", 0, "request num")
+
 func main() {
+	flag.Parse()
 	target := "localhost:9090"
 	options := []grpc.DialOption{
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
@@ -26,19 +32,25 @@ func main() {
 	defer conn.Close()
 	client := calcv1.NewCalcServiceClient(conn)
 
-	callUnaryCalc(client)
+	callUnaryCalc(client, *num)
 	callStreamCalc(client)
 }
 
-func callUnaryCalc(c calcv1.CalcServiceClient) {
+func callUnaryCalc(c calcv1.CalcServiceClient, num int) {
 	var header metadata.MD
 	var trailer metadata.MD
-	resp, err := c.UnaryCalc(context.Background(), &calcv1.UnaryCalcRequest{Num: 123}, grpc.Header(&header), grpc.Trailer(&trailer))
+	resp, err := c.UnaryCalc(context.Background(), &calcv1.UnaryCalcRequest{Num: float32(num)}, grpc.Header(&header), grpc.Trailer(&trailer))
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "failed to unary calc: %s", err)
+		errCode := status.Code(err)
+		switch errCode { //nolint:exhaustive
+		case codes.InvalidArgument:
+			fmt.Fprintf(os.Stderr, "invalid argument: %s\n", err)
+		default:
+			fmt.Fprintf(os.Stderr, "error occurred other than invalid argument: %s", err)
+		}
 		return
 	}
-	fmt.Printf("%+v\n", resp)
+	fmt.Printf("num: %+v\n", resp.GetNum())
 	vs := header.Get("my-header-key")
 	for _, v := range vs {
 		fmt.Printf("my-header-key: %s\n", v)
