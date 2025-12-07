@@ -4,6 +4,8 @@
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmukappalambda%2Fgo-examples.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmukappalambda%2Fgo-examples?ref=badge_shield)
 [![CodeQL](https://github.com/mukappalambda/go-examples/actions/workflows/codeql.yml/badge.svg)](https://github.com/mukappalambda/go-examples/actions/workflows/codeql.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mukappalambda/go-examples)](https://goreportcard.com/report/github.com/mukappalambda/go-examples)
+[![Security Scan](https://github.com/mukappalambda/go-examples/actions/workflows/scan.yml/badge.svg)](https://github.com/mukappalambda/go-examples/actions/workflows/scan.yml)
+[![Vuln Check](https://github.com/mukappalambda/go-examples/actions/workflows/vulncheck.yml/badge.svg)](https://github.com/mukappalambda/go-examples/actions/workflows/vulncheck.yml)
 
 For learning purposes only.
 
