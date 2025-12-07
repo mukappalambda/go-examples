@@ -1,4 +1,8 @@
-# Go Examples
+<div align="center">
+<h1 align="center">
+Go Examples
+</h1>
+</div>
 
 [![golangci-lint](https://github.com/mukappalambda/go-examples/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/mukappalambda/go-examples/actions/workflows/golangci-lint.yml)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmukappalambda%2Fgo-examples.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmukappalambda%2Fgo-examples?ref=badge_shield)
