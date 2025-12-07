@@ -5,8 +5,9 @@ import (
 	"crypto/tls"
 	"fmt"
 	"net"
-	checkinv1 "one-way-tls-grpc-server/gen/checkin/v1"
 	"os"
+
+	checkinv1 "one-way-tls-grpc-server/gen/checkin/v1"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"

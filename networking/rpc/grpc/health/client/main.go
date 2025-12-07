@@ -21,9 +21,7 @@ const serviceConfig = `{
 	}
 }`
 
-var (
-	message = flag.String("message", "", "request message")
-)
+var message = flag.String("message", "", "request message")
 
 func main() {
 	flag.Parse()
