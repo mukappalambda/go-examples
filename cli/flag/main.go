@@ -15,7 +15,7 @@ type HyperParam struct {
 	Dropout   float64
 }
 
-func newHyperParam(epochs uint, batchSize uint, optimizer string, criterion string, dropout float64) HyperParam {
+func newHyperParam(epochs, batchSize uint, optimizer, criterion string, dropout float64) HyperParam {
 	return HyperParam{
 		Epochs:    epochs,
 		BatchSize: batchSize,

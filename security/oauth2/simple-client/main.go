@@ -70,7 +70,7 @@ func (s *MyServer) ListenAndServe() error {
 	return s.server.ListenAndServe()
 }
 
-func newOauth2Config(clientID string, clientSecret string, redirectURL string) *oauth2.Config {
+func newOauth2Config(clientID, clientSecret, redirectURL string) *oauth2.Config {
 	conf := &oauth2.Config{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
