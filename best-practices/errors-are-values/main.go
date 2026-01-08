@@ -23,11 +23,11 @@ func NewErrWriter() *errWriter {
 	return ew
 }
 
-func (ew *errWriter) NewRequest(method string, url string, body io.Reader) *http.Request {
+func (ew *errWriter) NewRequest(method, url string, body io.Reader) *http.Request {
 	return ew.NewRequestWithContext(context.Background(), method, url, body)
 }
 
-func (ew *errWriter) NewRequestWithContext(ctx context.Context, method string, url string, body io.Reader) *http.Request {
+func (ew *errWriter) NewRequestWithContext(ctx context.Context, method, url string, body io.Reader) *http.Request {
 	req, err := http.NewRequestWithContext(ctx, method, url, body)
 	if err != nil {
 		// This error check may be redundant as it is the possible error that errWriter would encounter

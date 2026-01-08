@@ -28,7 +28,7 @@ func main() {
 	}
 }
 
-func run(name string, username string, host string, addr string, from string, to string) error {
+func run(name, username, host, addr, from, to string) error {
 	byt, err := os.ReadFile(name)
 	if err != nil {
 		return fmt.Errorf("error reading file: %q: %w", *pass, err)
