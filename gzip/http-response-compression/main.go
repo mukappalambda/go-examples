@@ -17,7 +17,7 @@ type gzipResponseWriter struct {
 }
 
 func (grw *gzipResponseWriter) Write(b []byte) (int, error) {
-	b = []byte(fmt.Sprintf("<wrapped by middleware>%s<wrapped by middleware>", string(b)))
+	b = fmt.Appendf(nil, "<wrapped by middleware>%s<wrapped by middleware>", string(b))
 	return grw.zw.Write(b)
 }
 

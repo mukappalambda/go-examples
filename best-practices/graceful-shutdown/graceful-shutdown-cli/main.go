@@ -13,9 +13,7 @@ func main() {
 	var wg sync.WaitGroup
 	shutdown := make(chan struct{})
 
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
+	wg.Go(func() {
 
 		for {
 			select {
@@ -28,7 +26,7 @@ func main() {
 				myFunc()
 			}
 		}
-	}()
+	})
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)

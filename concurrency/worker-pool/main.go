@@ -12,7 +12,7 @@ func main() {
 	jobs := make(chan string, numJobs)
 	results := make(chan string, numJobs)
 
-	for i := 0; i < numWorkers; i++ {
+	for i := range numWorkers {
 		go worker(i, jobs, results)
 	}
 
@@ -35,7 +35,7 @@ func main() {
 
 	close(jobs)
 
-	for i := 0; i < numJobs; i++ {
+	for range numJobs {
 		fmt.Println(<-results)
 	}
 }

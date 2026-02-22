@@ -15,7 +15,7 @@ func main() {
 
 	var cnt int32 = 0
 	wg.Add(numGoroutines)
-	for i := 0; i < numGoroutines; i++ {
+	for range numGoroutines {
 		go func() {
 			time.Sleep(50 * time.Millisecond)
 			atomic.AddInt32(&cnt, 1)

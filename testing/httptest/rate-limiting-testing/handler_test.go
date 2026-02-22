@@ -16,7 +16,7 @@ func TestRateLimitedHandler(t *testing.T) {
 	client := ts.Client()
 
 	num := r + b
-	for i := 0; i < num; i++ {
+	for range num {
 		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL, nil)
 		if err != nil {
 			t.Fail()

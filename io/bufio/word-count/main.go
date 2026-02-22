@@ -12,8 +12,8 @@ func main() {
 	wordCount := make(map[string]int)
 	for scanner.Scan() {
 		text := scanner.Text()
-		words := strings.Split(text, " ")
-		for _, word := range words {
+		words := strings.SplitSeq(text, " ")
+		for word := range words {
 			wordCount[word]++
 		}
 		fmt.Println("--- word count result ---")

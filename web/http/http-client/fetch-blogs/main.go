@@ -39,7 +39,7 @@ func run() error {
 	titles := fetchBlogTitles(doc)
 	summaries := fetchBlogSummaries(doc)
 
-	for i := 0; i < len(titles); i++ {
+	for i := range titles {
 		fmt.Printf("title: %q; summary: %q\n", titles[i], summaries[i])
 	}
 	return nil

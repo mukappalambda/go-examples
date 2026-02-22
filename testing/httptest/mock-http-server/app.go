@@ -40,6 +40,6 @@ func run() error {
 	if err != nil {
 		return fmt.Errorf("failed to read response body: %w", err)
 	}
-	fmt.Println("Is POST response correct?", bytes.Equal(buf, []byte(fmt.Sprintf("id: %d created", id))))
+	fmt.Println("Is POST response correct?", bytes.Equal(buf, fmt.Appendf(nil, "id: %d created", id)))
 	return nil
 }
