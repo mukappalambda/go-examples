@@ -14,7 +14,6 @@ func main() {
 	shutdown := make(chan struct{})
 
 	wg.Go(func() {
-
 		for {
 			select {
 			case <-shutdown:
