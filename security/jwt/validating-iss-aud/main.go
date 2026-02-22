@@ -100,7 +100,7 @@ func NewTokenString(method jwt.SigningMethod, claims jwt.Claims) (string, error)
 
 func ParseTokenString(tokenString, iss, aud string) (jwt.MapClaims, error) {
 	claims := NewClaims(iss, aud)
-	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (any, error) {
 		return key, nil
 	}, jwt.WithIssuer(iss), jwt.WithAudience(aud))
 	if err != nil {

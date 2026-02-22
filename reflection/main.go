@@ -22,7 +22,7 @@ func main() {
 		Done:  true,
 	}
 
-	t := reflect.TypeOf(user)
+	t := reflect.TypeFor[User]()
 	v := reflect.ValueOf(user)
 	k := t.Kind()
 
@@ -32,12 +32,12 @@ func main() {
 	fmt.Println(k)
 
 	a := 1
-	tint := reflect.TypeOf(a)
+	tint := reflect.TypeFor[int]()
 	vint := reflect.ValueOf(a)
 	fmt.Println(tint, vint)
 
 	names := []string{"alex", "bob", "mark"}
-	tnames := reflect.TypeOf(names)
+	tnames := reflect.TypeFor[[]string]()
 	vnames := reflect.ValueOf(names)
 	fmt.Println(tnames, vnames)
 
@@ -47,13 +47,13 @@ func main() {
 		"gender": "male",
 	}
 
-	tMyMap := reflect.TypeOf(myMap)
+	tMyMap := reflect.TypeFor[map[string]string]()
 	vMyMap := reflect.ValueOf(myMap)
 
 	fmt.Println(tMyMap, vMyMap, tMyMap.Elem())
 
 	c := make(chan string)
-	tc := reflect.TypeOf(c)
+	tc := reflect.TypeFor[chan string]()
 	vc := reflect.ValueOf(c)
 	fmt.Println(tc, vc)
 }

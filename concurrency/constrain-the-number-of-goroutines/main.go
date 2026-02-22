@@ -10,7 +10,7 @@ func main() {
 	numGoroutines := 20
 	c := make(chan struct{}, numGoroutines)
 
-	for i := 0; i < math.MaxInt32; i++ {
+	for i := range math.MaxInt32 {
 		c <- struct{}{}
 		go func(v int) {
 			fmt.Println(v)

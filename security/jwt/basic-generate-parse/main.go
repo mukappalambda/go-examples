@@ -87,7 +87,7 @@ func parseTokenString(tokenString string, opts ...jwt.ParserOption) (*jwt.MapCla
 	return &claims, nil
 }
 
-func myKeyFunc(token *jwt.Token) (interface{}, error) {
+func myKeyFunc(token *jwt.Token) (any, error) {
 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 		return nil, fmt.Errorf("incorrect signing method")
 	}

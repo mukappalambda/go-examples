@@ -8,7 +8,7 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-type Data map[string]interface{}
+type Data map[string]any
 
 func main() {
 	byt, err := os.ReadFile("./example.json")

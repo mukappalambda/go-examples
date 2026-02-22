@@ -23,15 +23,13 @@ func main() {
 	http.Handle("GET /token", HandleToken())
 	http.Handle("GET /data", JWTMiddleware(HandleData()))
 	var wg sync.WaitGroup
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
+	wg.Go(func() {
 		server := &http.Server{Addr: addr, ReadHeaderTimeout: 300 * time.Millisecond}
 		err := server.ListenAndServe()
 		if err != nil && err != http.ErrServerClosed {
 			log.Fatal(err)
 		}
-	}()
+	})
 	fmt.Printf("Server listening on %s\n", addr)
 	wg.Wait()
 }
@@ -104,7 +102,7 @@ func GenerateTokenString(key []byte) (string, error) {
 }
 
 func ParseAndValidateTokenString(tokenString string) (*jwt.Token, error) {
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (any, error) {
 		_, ok := token.Claims.(jwt.MapClaims)
 		if !ok {
 			return nil, fmt.Errorf("error parsing claims")
