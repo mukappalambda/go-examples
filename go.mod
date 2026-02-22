@@ -1,6 +1,6 @@
 module github.com/mukappalambda/go-examples
 
-go 1.25.1
+go 1.26.0
 
 require (
 	github.com/PuerkitoBio/goquery v1.10.2
