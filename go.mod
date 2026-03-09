@@ -1,10 +1,10 @@
 module github.com/mukappalambda/go-examples
 
-go 1.26.0
+go 1.26.1
 
 require (
 	github.com/PuerkitoBio/goquery v1.10.2
-	github.com/gofiber/fiber/v2 v2.52.11
+	github.com/gofiber/fiber/v2 v2.52.12
 	github.com/gofiber/swagger v1.1.1
 	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/gorilla/websocket v1.5.3
