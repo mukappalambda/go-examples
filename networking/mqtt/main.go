@@ -45,7 +45,7 @@ func run() error {
 		return fmt.Errorf("%s", token.Error().Error())
 	}
 
-	if token := client.Subscribe(*topic, 0, nil); token.Wait() && token.Error() != nil {
+	if token := client.Subscribe(*topic, 0, callback); token.Wait() && token.Error() != nil {
 		return fmt.Errorf("failed to subscribe topic: %s", token.Error().Error())
 	}
 
@@ -67,4 +67,9 @@ func run() error {
 
 func onConn(client mqtt.Client) {
 	fmt.Printf("%v - Client connected\n", time.Now().Truncate(time.Microsecond))
+}
+
+func callback(client mqtt.Client, msg mqtt.Message) {
+	fmt.Printf("[topic]: %s\n", msg.Topic())
+	fmt.Printf("[topic]: %s\n", msg.Payload())
 }
