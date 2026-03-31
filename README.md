@@ -32,7 +32,7 @@ For learning purposes only.
 
 This repo is a collection of Go examples.
 
-Each subdirectroy presents one idea through multiple cases.
+Each subdirectory presents one idea through multiple cases.
 
 ---
 
