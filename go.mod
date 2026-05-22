@@ -34,8 +34,8 @@ require (
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	golang.org/x/net v0.48.0 // indirect
-	golang.org/x/sys v0.41.0 // indirect
+	golang.org/x/net v0.55.0 // indirect
+	golang.org/x/sys v0.45.0 // indirect
 	golang.org/x/tools v0.32.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
