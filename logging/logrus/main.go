@@ -6,27 +6,30 @@ import (
 
 func main() {
 	log.SetLevel(log.InfoLevel)
+	event := "event"
+	duration := "duration"
+	place := "place"
 	proteinLogger := log.WithFields(log.Fields{
-		"event":    "Drink Protein Shake",
-		"duration": "2 min",
-		"place":    "Room",
+		event:    "Drink Protein Shake",
+		duration: "2 min",
+		place:    "Room",
 	})
 
 	warmupLogger := log.WithFields(log.Fields{
-		"event":    "Warm-Up",
-		"duration": "10 min",
-		"place":    "Playground",
+		event:    "Warm-Up",
+		duration: "10 min",
+		place:    "Playground",
 	})
 
 	HIITLogger := log.WithFields(log.Fields{
-		"event":    "HIIT Workout",
-		"duration": "40 min",
-		"place":    "Workout place",
+		event:    "HIIT Workout",
+		duration: "40 min",
+		place:    "Workout place",
 	})
 	MarathonLogger := log.WithFields(log.Fields{
-		"event":    "Run a marathon",
-		"duration": "3 hours",
-		"place":    "Riverside",
+		event:    "Run a marathon",
+		duration: "3 hours",
+		place:    "Riverside",
 	})
 
 	proteinLogger.Info("morning")
