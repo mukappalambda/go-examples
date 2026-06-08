@@ -41,10 +41,10 @@ func run() error {
 	return nil
 }
 
-func incrN(ctx context.Context, client *redis.Client, key string, N int) {
+func incrN(ctx context.Context, client *redis.Client, key string, n int) {
 	_ = client.Watch(ctx, func(tx *redis.Tx) error {
 		_, err := tx.TxPipelined(ctx, func(pipe redis.Pipeliner) error {
-			for range N {
+			for range n {
 				pipe.Incr(ctx, key)
 			}
 			return nil
