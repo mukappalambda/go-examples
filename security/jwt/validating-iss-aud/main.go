@@ -3,7 +3,9 @@ package main
 import (
 	"errors"
 	"log"
+	"log/slog"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -14,6 +16,8 @@ var (
 	key                = []byte("my-secret-key")
 	validSigningMethod = jwt.SigningMethodHS256
 )
+
+var logger = slog.New(slog.NewJSONHandler(os.Stdout, nil))
 
 func main() {
 	defaultIssuer := "example.auth.server"
@@ -47,20 +51,20 @@ func JWTValidator(iss, aud string) func(http.HandlerFunc) http.HandlerFunc {
 			authHeader := r.Header.Get("Authorization")
 			if authHeader == "" {
 				errStr := "unauthorized"
-				log.Printf("%s %s\n", r.RemoteAddr, errStr)
+				logger.Error("auth-header", "remote-addr", r.RemoteAddr, "err", errStr)
 				http.Error(w, errStr, http.StatusUnauthorized)
 				return
 			}
 			if !strings.HasPrefix(authHeader, "Bearer ") {
 				errStr := "invalid token"
-				log.Printf("%s %s\n", r.RemoteAddr, errStr)
+				logger.Error("token", "remote-addr", r.RemoteAddr, "err", errStr)
 				http.Error(w, errStr, http.StatusUnauthorized)
 				return
 			}
 			tokenString := strings.TrimPrefix(authHeader, "Bearer ")
 			claims, err := ParseTokenString(tokenString, iss, aud)
 			if err != nil {
-				log.Printf("%s %s\n", r.RemoteAddr, err.Error())
+				logger.Error("token", "remote-addr", r.RemoteAddr, "err", err.Error())
 				http.Error(w, "invalid token", http.StatusUnauthorized)
 				return
 			}
@@ -70,7 +74,7 @@ func JWTValidator(iss, aud string) func(http.HandlerFunc) http.HandlerFunc {
 				log.Println(issErr, audErr)
 				return
 			}
-			log.Printf("iss: %q aud: %q\n", iss, aud)
+			logger.Info("claims", "issuer", iss, "audience", aud)
 			h.ServeHTTP(w, r)
 		}
 	}
