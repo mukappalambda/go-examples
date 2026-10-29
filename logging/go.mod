@@ -1,10 +1,7 @@
 module logging-demo
 
-go 1.23.3
+go 1.27.3
 
-require github.com/sirupsen/logrus v1.9.3
+require github.com/sirupsen/logrus v1.10.2
 
-require (
-	golang.org/x/sys v0.29.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
-)
+require golang.org/x/sys v0.49.0 // indirect
